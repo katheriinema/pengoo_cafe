@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://d15l6wnnrt1c1"]
+
+[ext_resource type="Script" uid="uid://bjovcyfv071r6" path="res://onboarding.gd" id="1_vub3d"]
+
+[node name="Onboarding" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_vub3d")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Welcome to the onboarding!"
+
+[node name="Finish" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Finish"
+
+[connection signal="pressed" from="VBoxContainer/Finish" to="." method="_on_finish_pressed"]

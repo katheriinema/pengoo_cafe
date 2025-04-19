@@ -1,0 +1,6 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+# Ignore godot-sqlite iOS build artifacts 
+addons/godot-sqlite/bin/*.xcframework/
+addons/godot-sqlite/bin/*.a

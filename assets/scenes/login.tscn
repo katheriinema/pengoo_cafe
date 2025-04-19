@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=3 uid="uid://2cdm06jg3yua"]
+
+[ext_resource type="Script" uid="uid://bg8tyfb3qhf5e" path="res://assets/scenes/login.gd" id="1_2rp5k"]
+
+[node name="Login" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_2rp5k")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 174.0
+offset_bottom = 201.0
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Enter Username"
+horizontal_alignment = 1
+
+[node name="UsernameInput" type="LineEdit" parent="VBoxContainer"]
+layout_mode = 2
+placeholder_text = "your name"
+alignment = 1
+
+[node name="PasswordInput" type="LineEdit" parent="VBoxContainer"]
+layout_mode = 2
+placeholder_text = "password"
+alignment = 1
+
+[node name="LoginButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Login"
+
+[node name="SignupButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Signup"
+
+[node name="ErrorLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+
+[connection signal="pressed" from="VBoxContainer/LoginButton" to="." method="_on_login_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/SignupButton" to="." method="_on_signup_button_pressed"]
