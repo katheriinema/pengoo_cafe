@@ -1,0 +1,130 @@
+[gd_scene load_steps=6 format=3 uid="uid://ddl368sfmifvu"]
+
+[ext_resource type="Script" uid="uid://dsmxsvsaco7xy" path="res://assets/scenes/Main.gd" id="1_npkpr"]
+[ext_resource type="Texture2D" uid="uid://dj6ibikvkaorf" path="res://assets/art/placeholders/istockphoto-1289241322-612x612.jpg" id="2_xt100"]
+[ext_resource type="Texture2D" uid="uid://bo8omeirysftt" path="res://assets/art/placeholders/Untitled_design-removebg-preview (2).png" id="4_eruk6"]
+[ext_resource type="Texture2D" uid="uid://b4qxj5lb1snrw" path="res://assets/art/placeholders/igloo_home.png" id="4_jv468"]
+[ext_resource type="Texture2D" uid="uid://bepho4g61xivc" path="res://assets/art/placeholders/Untitled_design-removebg-preview.png" id="5_jv468"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_npkpr")
+
+[node name="WorldLayer" type="Node2D" parent="."]
+
+[node name="Background" type="Sprite2D" parent="WorldLayer"]
+position = Vector2(632, 360)
+scale = Vector2(2.10458, 2.31056)
+texture = ExtResource("2_xt100")
+
+[node name="PlotSpawns" type="Node2D" parent="WorldLayer"]
+
+[node name="SpawnPoint0" type="Marker2D" parent="WorldLayer/PlotSpawns"]
+z_index = 3
+position = Vector2(640, 360)
+
+[node name="SpawnPoint1" type="Marker2D" parent="WorldLayer/PlotSpawns"]
+position = Vector2(256, 416)
+
+[node name="SpawnPoint2" type="Marker2D" parent="WorldLayer/PlotSpawns"]
+position = Vector2(648, 616)
+
+[node name="SpawnPoint3" type="Marker2D" parent="WorldLayer/PlotSpawns"]
+position = Vector2(1016, 416)
+
+[node name="PondButton" type="TextureButton" parent="WorldLayer"]
+offset_left = 808.0
+offset_top = -160.0
+offset_right = 1308.0
+offset_bottom = 340.0
+texture_normal = ExtResource("4_eruk6")
+
+[node name="IglooButton" type="TextureButton" parent="WorldLayer"]
+offset_left = 35.0
+offset_top = 588.0
+offset_right = 1571.0
+offset_bottom = 1612.0
+scale = Vector2(0.0964439, 0.0996977)
+texture_normal = ExtResource("4_jv468")
+
+[node name="ShopButton" type="TextureButton" parent="WorldLayer"]
+offset_left = 1119.0
+offset_top = 575.0
+offset_right = 1619.0
+offset_bottom = 1075.0
+scale = Vector2(0.297125, 0.287037)
+texture_normal = ExtResource("5_jv468")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="ChatPanel" type="Panel" parent="UI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -100.0
+offset_right = 300.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ChatLabel" type="Label" parent="UI/ChatPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -345.0
+offset_top = 12.0
+offset_right = 345.0
+offset_bottom = 38.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 18
+text = "Hi Chief! Name your village:"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="NameInput" type="LineEdit" parent="UI/ChatPanel"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.2813
+offset_top = -15.5
+offset_right = 34.2813
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OkButton" type="Button" parent="UI/ChatPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -18.0
+offset_top = -40.0
+offset_right = 18.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "OK!"
+
+[node name="CoinLabel" type="Label" parent="UI"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 50.0
+offset_bottom = 33.0
+text = "Coins: 0"
+
+[node name="FishLabel" type="Label" parent="UI"]
+offset_left = 12.0
+offset_top = 50.0
+offset_right = 52.0
+offset_bottom = 73.0
+text = "Fish: 0"

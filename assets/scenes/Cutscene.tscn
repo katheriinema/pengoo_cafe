@@ -1,0 +1,55 @@
+[gd_scene load_steps=2 format=3 uid="uid://dofodg6hf5qlk"]
+
+[ext_resource type="Script" uid="uid://dntpciypb07qw" path="res://assets/scenes/cutscene.gd" id="1_3o5lg"]
+
+[node name="Cutscene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3o5lg")
+
+[node name="PanelDisplay" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 5
+stretch_mode = 6
+
+[node name="CaptionBg" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -79.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0, 0, 0.556863)
+
+[node name="Caption" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -60.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 30
+
+[node name="Finish" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1148.0
+offset_top = 23.0
+offset_right = 1251.0
+offset_bottom = 59.0
+text = "Finish"
+
+[connection signal="pressed" from="Finish" to="." method="_on_finish_pressed"]

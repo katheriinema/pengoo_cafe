@@ -26,7 +26,7 @@ func _on_login_button_pressed():
 			if GameState.has_onboarded:
 				get_tree().change_scene_to_file("res://assets/scenes/Main.tscn")
 			else:
-				get_tree().change_scene_to_file("res://assets/scenes/Onboarding.tscn")
+				get_tree().change_scene_to_file("res://assets/scenes/Cutscene.tscn")
 		"no_user", "wrong_password":
 			show_error(result["message"])
 
@@ -43,7 +43,3 @@ func _on_signup_button_pressed():
 
 func show_error(msg: String):
 	$VBoxContainer/ErrorLabel.text = msg
-
-
-func _on_singup_button_pressed() -> void:
-	pass # Replace with function body.
