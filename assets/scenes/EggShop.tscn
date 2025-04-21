@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://jvb3ptapnvcr" path="res://assets/scenes/egg_shop.gd" id="1_u7tvb"]
 [ext_resource type="Texture2D" uid="uid://bepho4g61xivc" path="res://assets/art/placeholders/Untitled_design-removebg-preview.png" id="2_y22a4"]
-[ext_resource type="FontFile" uid="uid://cd1aioybntas7" path="res://assets/art/placeholders/Sniglet-Regular.ttf" id="3_b2nem"]
+[ext_resource type="FontFile" uid="uid://cd1aioybntas7" path="res://assets/art/Sniglet-Regular.ttf" id="3_b2nem"]
 
 [node name="EggShop" type="Node2D"]
 script = ExtResource("1_u7tvb")

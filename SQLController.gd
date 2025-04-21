@@ -4,7 +4,7 @@ var database : SQLite
 
 func _ready() -> void:
 	database = SQLite.new()
-	database.path = "res://penguin_game.db"  # Use user:// for persistence
+	database.path = "res://penguin_game.db"
 	database.open_db()
 	_create_player_table()
 

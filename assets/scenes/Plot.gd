@@ -41,23 +41,23 @@ func feed():
 func hatch():
 	if is_hatched: return
 	is_hatched = true
-
-	# Remove the egg
-	if egg_node and egg_node.is_inside_tree():
-		egg_node.queue_free()
-
-	# Spawn the penguin
+	egg_node.queue_free()
 	griller_node = griller_scene.instantiate()
 	griller_node.position = $EggSpawnPoint.position
 	add_child(griller_node)
-
+	# Record new penguin
+	GameState.owned_penguins.append(penguin_type)
+	GameState.save_to_db()
 	emit_signal("plot_hatched", self)
+
 
 func sell():
 	# Don’t allow selling the last penguin
 	var remaining = get_tree().get_nodes_in_group("plots").size()
 	if remaining <= 1:
 		return
+	GameState.owned_penguins.erase(penguin_type)
+	GameState.save_to_db()
 	GameState.add_coins(100)
 	queue_free()
 

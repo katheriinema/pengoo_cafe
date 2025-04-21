@@ -1,46 +1,46 @@
 extends Control
 
 @export var penguin_card_scene: PackedScene
-@onready var penguin_grid = $RightPanel/PenguinScroll/PenguinGrid
-
-# Mock user data (can replace with real player data later)
-var user_data = {
-	"username": "kakakakak",
-	"date_started": "2025-04-17",
-	"owned_penguins": [
-		{"name": "Waddles", "image": "res://assets/art/placeholders/penguin.png"},
-		{"name": "Icy", "image": "res://assets/art/placeholders/penguin.png"},
-		{"name": "Fluffy", "image": "res://assets/art/placeholders/penguin.png"},
-		{"name": "Zippy", "image": "res://assets/art/placeholders/penguin.png"},
-		{"name": "Pebbles", "image": "res://assets/art/placeholders/penguin.png"},
-		{"name": "Frosty", "image": "res://assets/art/placeholders/penguin.png"},
-		{"name": "Waddles", "image": "res://assets/art/placeholders/penguin.png"},
-		{"name": "Icy", "image": "res://assets/art/placeholders/penguin.png"},
-		{"name": "Fluffy", "image": "res://assets/art/placeholders/penguin.png"},
-		{"name": "Zippy", "image": "res://assets/art/placeholders/penguin.png"},
-		{"name": "Pebbles", "image": "res://assets/art/placeholders/penguin.png"},
-		{"name": "Frosty", "image": "res://assets/art/placeholders/penguin.png"}
-	],
-	"total_revenue": 1240
-}
+@onready var penguin_grid       = $RightPanel/PenguinScroll/PenguinGrid
 
 func _ready():
 	display_user_info()
 	populate_penguins()
 
 func display_user_info():
-	$LeftPanel/Username.text = user_data.username + "'s Village"
-	$LeftPanel/DateStarted.text = "Date Started: " + user_data.date_started
-	$LeftPanel/OwnedPenguins.text = "Owned Penguins: " + str(user_data.owned_penguins.size())
-	$LeftPanel/TotalRevenue.text = "Total Revenue: $" + str(user_data.total_revenue)
+	# Username
+	$LeftPanel/Username.text = "%s’s Village" % GameState.player_id
+
+	# Owned penguin count
+	$LeftPanel/DaysPlayed.text = "Days Played: %d" % GameState.total_days_played
+
+	# Owned penguin count
+	$LeftPanel/OwnedPenguins.text = "Owned Penguins: %d" % GameState.owned_penguins.size()
+
+	# Total revenue
+	$LeftPanel/TotalRevenue.text = "Total Revenue: $%d" % GameState.total_revenue
 
 func populate_penguins():
-	for penguin in user_data.owned_penguins:
-		var card = penguin_card_scene.instantiate()
-		card.get_node("PenguinImage").texture = load(penguin.image)
-		card.get_node("PenguinName").text = penguin.name
-		penguin_grid.add_child(card)
+	# Clear out any old cards
+	for child in penguin_grid.get_children():
+		child.queue_free()
 
+	# For each owned penguin, instantiate a card
+	for penguin in GameState.owned_penguins:
+		var card = penguin_card_scene.instantiate()
+
+		# If you store penguins as dicts with name + type:
+		#    var name = penguin.name
+		#    var icon_path = "res://assets/art/icons/%s.png" % penguin.type
+		#
+		# If you just store a list of types (e.g. ["taiyaki","matcha"...]):
+		var name = penguin   # or fetch a stored name if you added that
+		var icon_path = "res://assets/art/icons/%s.png" % penguin
+
+		card.get_node("PenguinImage").texture = load(icon_path)
+		card.get_node("PenguinName").text     = name
+
+		penguin_grid.add_child(card)
 
 func _on_exit_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://assets/scenes/Main.tscn")

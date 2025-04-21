@@ -5,6 +5,7 @@ signal fish_changed(new_amount)
 signal energy_changed(current, max)
 
 var player_id: String = "" 
+var password:  String = ""  
 var has_onboarded: bool = false
 var coins: int = 0
 var total_revenue: int = 0

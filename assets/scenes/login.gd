@@ -22,6 +22,7 @@ func _on_login_button_pressed():
 	match result["status"]:
 		"success":
 			GameState.player_id = username
+			GameState.password  = password
 			GameState.sync_from_database(result["user"])
 			if GameState.has_onboarded:
 				get_tree().change_scene_to_file("res://assets/scenes/Main.tscn")

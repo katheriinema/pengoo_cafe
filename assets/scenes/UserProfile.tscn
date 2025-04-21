@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://pexv4vlbnu4b" path="res://assets/scenes/user_profile.gd" id="1_ywsak"]
 [ext_resource type="PackedScene" uid="uid://dmoj3jca7lrq3" path="res://assets/scenes/PenguinCard.tscn" id="2_ttceo"]
 [ext_resource type="Texture2D" uid="uid://b4qxj5lb1snrw" path="res://assets/art/placeholders/igloo_home.png" id="4_oioyv"]
-[ext_resource type="FontFile" uid="uid://cd1aioybntas7" path="res://assets/art/placeholders/Sniglet-Regular.ttf" id="7_cs7eh"]
+[ext_resource type="FontFile" uid="uid://cd1aioybntas7" path="res://assets/art/Sniglet-Regular.ttf" id="7_cs7eh"]
 
 [node name="UserProfile" type="Control"]
 layout_mode = 3
@@ -48,14 +48,14 @@ scale = Vector2(0.675042, 0.642829)
 texture = ExtResource("1_bgklu")
 stretch_mode = 5
 
-[node name="DateStarted" type="Label" parent="LeftPanel"]
+[node name="DaysPlayed" type="Label" parent="LeftPanel"]
 layout_mode = 2
 offset_left = 40.0
 offset_top = 451.0
 offset_right = 448.0
 offset_bottom = 474.0
 theme_override_font_sizes/font_size = 24
-text = "Date Started: 2025-04-17"
+text = "Days Played: 150"
 
 [node name="OwnedPenguins" type="Label" parent="LeftPanel"]
 layout_mode = 2
