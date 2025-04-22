@@ -27,20 +27,22 @@ func _create_player_table():
 
 func try_login(player_id: String, password: String) -> Dictionary:
 	var condition = "player_id = '%s'" % player_id
-	var result = database.select_rows("players", condition, ["*"])
+	var rows = database.select_rows("players", condition, ["*"])
+	if rows.size() == 0:
+		return {"status":"no_user","message":"Username doesn't exist. Please sign up."}
 
-	if result.size() == 0:
-		return {"status": "no_user", "message": "Username doesn't exist. Please sign up."}
-
-	var user = result[0]
+	var user = rows[0]
 	if user["password"] != password:
-		return {"status": "wrong_password", "message": "Wrong password. Try again."}
+		return {"status":"wrong_password","message":"Wrong password. Try again."}
 
-	# Parse JSON
+	# ───── JSON.parse_string returns the actual Array in Godot 4 ─────
 	user["owned_penguins"] = JSON.parse_string(user["owned_penguins"])
-	user["owned_eggs"] = JSON.parse_string(user["owned_eggs"])
+	user["owned_eggs"]     = JSON.parse_string(user["owned_eggs"])
 
-	return {"status": "success", "user": user}
+	return {"status":"success","user":user}
+
+
+
 
 func create_account(player_id: String, password: String) -> Dictionary:
 	var condition = "player_id = '%s'" % player_id

@@ -104,3 +104,13 @@ func use_energy(amount: int = 1) -> bool:
 		save_to_db()
 		return true
 	return false
+
+func get_used_plot_indices() -> Array[int]:
+	var used: Array[int] = []
+	for egg in owned_eggs:
+		if typeof(egg) == TYPE_DICTIONARY and egg.has("plot_index"):
+			used.append(int(egg["plot_index"]))
+	for penguin in owned_penguins:
+		if typeof(penguin) == TYPE_DICTIONARY and penguin.has("plot_index"):
+			used.append(int(penguin["plot_index"]))
+	return used

@@ -104,6 +104,8 @@ theme_override_fonts/font = ExtResource("3_b2nem")
 theme_override_font_sizes/font_size = 24
 text = "Back to Village"
 
+[node name="LimitPopup" type="ConfirmationDialog" parent="."]
+
 [connection signal="pressed" from="EggContainer/EggCommon/BuyButtonCommon" to="." method="_on_buy_button_common_pressed"]
 [connection signal="pressed" from="EggContainer/EggRare/BuyButtonRare" to="." method="_on_buy_button_rare_pressed"]
 [connection signal="pressed" from="EggContainer/EggEpic/BuyButtonEpic" to="." method="_on_buy_button_epic_pressed"]

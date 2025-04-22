@@ -89,4 +89,4 @@ func _fade_out():
 func _on_finish_pressed():
 	GameState.has_onboarded = true
 	GameState.save_to_db()
-	get_tree().change_scene_to_file("res://assets/scenes/Main.tscn")  # or Main.tscn if you prefer
+	get_tree().change_scene_to_file("res://assets/scenes/onboarding.tscn")  # or Main.tscn if you prefer

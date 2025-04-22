@@ -41,7 +41,7 @@ func show_for_plot(plot):
 	else:
 		# ─── HATCHED PHASE ───
 		name_input.visible           = true
-		name_input.text              = plot.penguin_name
+		name_input.text = current_plot.penguin_name
 		name_input.placeholder_text  = "Enter name for your %s penguin" % plot.penguin_type
 		name_input.grab_focus()
 
@@ -56,27 +56,21 @@ func show_for_plot(plot):
 		else:
 			skill_icon.visible = false
 
-		# Disable Sell if only one penguin remains
-		var remaining = get_tree().get_nodes_in_group("plots").size()
-		action_btn.disabled = remaining <= 1
+		action_btn.disabled = plot.is_starter
 		if not action_btn.disabled:
 			action_btn.connect("pressed", Callable(self, "_on_sell"))
 
 	show()
 
 func _on_feed():
-	if GameState.spend_fish():
-		current_plot.feed()
-		show_for_plot(current_plot)
-	else:
-		action_btn.disabled = true
-		description.text += "\n(Out of fish!)"
+	current_plot.feed()
+	show_for_plot(current_plot)
 
 func _on_name_submitted(text:String):
-	var cleaned = text.strip_edges()
-	if cleaned != "":
-		current_plot.set_penguin_name(cleaned)
+	if text.strip_edges() != "":
+		current_plot.set_penguin_name(text)
 		show_for_plot(current_plot)
+
 
 func _on_sell():
 	current_plot.sell()

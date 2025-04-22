@@ -1,4 +1,3 @@
-# res://assets/scripts/Plot.gd
 extends Node2D
 
 signal plot_clicked(plot)
@@ -15,12 +14,17 @@ const FISH_TO_HATCH = 3
 var fish_fed     : int    = 0
 var is_hatched   : bool   = false
 var penguin_name : String = ""
+var egg_id       : String = ""  # set by Main.gd when spawning
 
 var egg_node     : Node2D
 var griller_node : Node2D
+var plot_index: int = 0
+var rarity: String = "common"
+var is_starter: bool = false
+
 
 func _ready():
-	# Spawn the egg
+	# Spawn the egg visual
 	egg_node = egg_scene.instantiate()
 	egg_node.position = $EggSpawnPoint.position
 	add_child(egg_node)
@@ -28,36 +32,80 @@ func _ready():
 	add_to_group("plots")
 	$Area2D.connect("input_event", Callable(self, "_on_area_input"))
 
-func _on_area_input(_viewport, event, _shape_idx):
+func _on_area_input(_v, event, _s):
 	if event is InputEventMouseButton and event.pressed:
 		emit_signal("plot_clicked", self)
 
 func feed():
-	if is_hatched: return
+	if is_hatched:
+		return
+	if not GameState.spend_fish():
+		# Not enough fish, tell the panel to update
+		emit_signal("plot_clicked", self)
+		return
 	fish_fed += 1
 	if fish_fed >= FISH_TO_HATCH:
 		hatch()
+	else:
+		emit_signal("plot_clicked", self)
 
-func hatch():
-	if is_hatched: return
+
+# ← Updated signature:
+func hatch(skip_persist: bool = false):
+	if is_hatched:
+		return
 	is_hatched = true
-	egg_node.queue_free()
+
+	# Visual swap
+	if egg_node:
+		egg_node.queue_free()
 	griller_node = griller_scene.instantiate()
 	griller_node.position = $EggSpawnPoint.position
 	add_child(griller_node)
-	# Record new penguin
-	GameState.owned_penguins.append(penguin_type)
-	GameState.save_to_db()
-	emit_signal("plot_hatched", self)
+
+	if not skip_persist:
+		# Remove egg
+		for entry in GameState.owned_eggs:
+			var entry_id = ""
+			if typeof(entry) == TYPE_DICTIONARY:
+				entry_id = entry["id"]
+			else:
+				entry_id = entry
+
+			if entry_id == egg_id:
+				GameState.owned_eggs.erase(entry)
+				break
+
+		# Add penguin
+		GameState.owned_penguins.append({
+			"id": egg_id,
+			"type": penguin_type,
+			"rarity": rarity,
+			"name": "",
+			"plot_index": plot_index,
+			"is_starter": is_starter
+		})
+		GameState.save_to_db()
+
+		emit_signal("plot_hatched", self)
 
 
 func sell():
-	# Don’t allow selling the last penguin
-	var remaining = get_tree().get_nodes_in_group("plots").size()
-	if remaining <= 1:
+	if is_starter:
+		print("❌ Cannot sell the starter penguin.")
 		return
-	GameState.owned_penguins.erase(penguin_type)
-	GameState.save_to_db()
+
+	# remove from owned_penguins
+	for entry in GameState.owned_penguins:
+		var entry_id: String
+		if typeof(entry) == TYPE_DICTIONARY:
+			entry_id = entry["id"]
+		else:
+			entry_id = entry
+		if entry_id == egg_id:
+			GameState.owned_penguins.erase(entry)
+			break
+
 	GameState.add_coins(100)
 	queue_free()
 
@@ -67,8 +115,14 @@ func is_egg() -> bool:
 func needs_name() -> bool:
 	return is_hatched and penguin_name == ""
 
-func set_penguin_name(new_name:String) -> void:
-	penguin_name = new_name
+func set_penguin_name(new_name: String):
+	penguin_name = new_name.strip_edges()
+	for entry in GameState.owned_penguins:
+		if typeof(entry) == TYPE_DICTIONARY and entry.get("id") == egg_id:
+			entry["name"] = penguin_name
+			break
+	GameState.save_to_db()
+
 
 func get_display_texture() -> Texture2D:
 	if is_egg():

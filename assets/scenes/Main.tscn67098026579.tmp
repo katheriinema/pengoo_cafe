@@ -20,7 +20,7 @@ texture = ExtResource("2_xt100")
 
 [node name="SpawnPoint0" type="Marker2D" parent="WorldLayer/PlotSpawns"]
 z_index = 3
-position = Vector2(629, 360)
+position = Vector2(640, 360)
 
 [node name="SpawnPoint1" type="Marker2D" parent="WorldLayer/PlotSpawns"]
 position = Vector2(256, 416)
