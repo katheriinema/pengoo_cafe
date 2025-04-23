@@ -13,7 +13,7 @@ var selected_egg_type = ""
 var prices = {"common":10, "rare":50, "epic":200}
 
 const RARITY_TO_TYPES = {
-	"common": ["taiyaki", "cream"],
+	"common": ["cream"],
 	"rare": ["redbean", "chocolate"],
 	"epic": ["matcha"]
 }
@@ -37,20 +37,15 @@ func _on_buy_button_epic_pressed():
 	_on_buy_button_pressed("epic")
 
 func _on_buy_button_pressed(egg_type:String):
-	var total = GameState.owned_eggs.size() + GameState.owned_penguins.size()
-	if total >= 4:
-		limit_popup.dialog_text = "Inventory full! Max 4 total."
-		limit_popup.popup_centered()
-		return
-
 	selected_egg_type = egg_type
 	confirmation.dialog_text = "Buy a %s egg for $%d?" % [egg_type.capitalize(), prices[egg_type]]
 	confirmation.popup_centered()
 
 func _on_confirmation_popup_confirmed():
-	var total = GameState.owned_eggs.size() + GameState.owned_penguins.size()
-	if total >= 4:
-		limit_popup.dialog_text = "Cannot buy more—inventory is full."
+	var taken = GameState.get_used_plot_indices()
+
+	if taken.size() >= 9:
+		limit_popup.dialog_text = "All 9 plots are full!"
 		limit_popup.popup_centered()
 		return
 
@@ -61,17 +56,16 @@ func _on_confirmation_popup_confirmed():
 
 	# ─── Get next available plot index (0–3) ───
 	# Build list of occupied plot indices from both eggs and penguins
-	var taken = GameState.get_used_plot_indices()
 
 	var next_index = 0
-	while taken.has(next_index) and next_index < 4:
+	while taken.has(next_index) and next_index < 9:
 		next_index += 1
 	print("🐣 Eggs:", GameState.owned_eggs)
 	print("🐧 Penguins:", GameState.owned_penguins)
 	print("📦 Total count:", GameState.owned_eggs.size() + GameState.owned_penguins.size())
 
-	if next_index >= 4:
-		limit_popup.dialog_text = "All 4 plots are full!"
+	if next_index >= 9:
+		limit_popup.dialog_text = "All 9 plots are full!"
 		limit_popup.popup_centered()
 		return
 

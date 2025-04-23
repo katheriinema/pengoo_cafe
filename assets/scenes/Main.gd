@@ -23,7 +23,7 @@ func _ready():
 
 	# Build spawn_points safely
 	if plot_spawns != null:
-		for i in range(4):
+		for i in range(9):
 			var node_name = "SpawnPoint" + str(i)
 			var sp = plot_spawns.get_node_or_null(node_name)
 			if sp == null:
@@ -55,6 +55,10 @@ func _ready():
 
 	# Spawn everything the player owns
 	_load_owned_items()
+	
+	for item in GameState.for_sale_items:
+	# false = don’t re-append to GameState, just draw the UI
+		CookingManager._emit_selling_item(item["type"], item["payout"], false)
 
 func _load_owned_items():
 	var index = 0
@@ -100,8 +104,7 @@ func _spawn_plot(data: Dictionary, idx: int, hatched: bool):
 	plot.penguin_name = data.get("name", "")
 	plot.plot_index   = plot_index
 	plot.panel_description = panel_description
-
-
+	
 	# Set position using plot_index!
 	if plot_index < spawn_points.size():
 		var sp = spawn_points[plot_index]
@@ -118,6 +121,9 @@ func _spawn_plot(data: Dictionary, idx: int, hatched: bool):
 
 	if hatched:
 		plot.hatch(true)
+		
+	CookingManager.register_plot(plot)
+
 
 func open_plot_panel(plot):
 	plot_panel.show_for_plot(plot)

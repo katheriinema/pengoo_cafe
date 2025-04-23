@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dsbkrl2c1kx76"
-path="res://.godot/imported/chocolate.png-05036ed4ce4d0add83ae1558cb9b9e3a.ctex"
+uid="uid://qfyvi2mhm1v0"
+path="res://.godot/imported/chocolate.PNG-3197ae3d004d546fc64e41e2fe32acfd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/icons/chocolate.png"
-dest_files=["res://.godot/imported/chocolate.png-05036ed4ce4d0add83ae1558cb9b9e3a.ctex"]
+source_file="res://assets/art/icons/chocolate.PNG"
+dest_files=["res://.godot/imported/chocolate.PNG-3197ae3d004d546fc64e41e2fe32acfd.ctex"]
 
 [params]
 

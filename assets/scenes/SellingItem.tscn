@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://bki5r25ahk4l2"]
+
+[ext_resource type="Script" uid="uid://c25q5x3bhpoj2" path="res://assets/scenes/selling_item.gd" id="1_55us7"]
+
+[node name="SellingItem" type="Button"]
+offset_right = 65.0
+offset_bottom = 61.0
+theme_override_font_sizes/font_size = 24
+text = "Sell"
+script = ExtResource("1_55us7")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 31.0

@@ -4,7 +4,6 @@ signal plot_clicked(plot)
 signal plot_hatched(plot)
 
 @export var egg_scene        : PackedScene = preload("res://assets/scenes/Egg.tscn")
-@export var griller_scene    : PackedScene = preload("res://assets/scenes/GrillerPenguin.tscn")
 @export var penguin_type     : String      = "taiyaki"
 @export var panel_description: String      = "Your first penguin!!!"
 @export var icon_folder      : String      = "res://assets/art/icons/"
@@ -16,12 +15,11 @@ var is_hatched   : bool   = false
 var penguin_name : String = ""
 var egg_id       : String = ""  # set by Main.gd when spawning
 
-var egg_node     : Node2D
-var griller_node : Node2D
-var plot_index: int = 0
-var rarity: String = "common"
-var is_starter: bool = false
-
+var egg_node         : Node2D
+var penguin_sprite   : Sprite2D
+var plot_index       : int = 0
+var rarity           : String = "common"
+var is_starter       : bool = false
 
 func _ready():
 	# Spawn the egg visual
@@ -40,7 +38,6 @@ func feed():
 	if is_hatched:
 		return
 	if not GameState.spend_fish():
-		# Not enough fish, tell the panel to update
 		emit_signal("plot_clicked", self)
 		return
 	fish_fed += 1
@@ -49,22 +46,32 @@ func feed():
 	else:
 		emit_signal("plot_clicked", self)
 
-
-# ← Updated signature:
 func hatch(skip_persist: bool = false):
 	if is_hatched:
 		return
 	is_hatched = true
 
-	# Visual swap
+	# Remove egg
 	if egg_node:
 		egg_node.queue_free()
-	griller_node = griller_scene.instantiate()
-	griller_node.position = $EggSpawnPoint.position
-	add_child(griller_node)
 
+	# Add penguin sprite using correct icon
+	penguin_sprite = Sprite2D.new()
+	var icon_path = "%s%s.png" % [icon_folder, penguin_type]
+	if ResourceLoader.exists(icon_path):
+		penguin_sprite.texture = load(icon_path)
+	else:
+		push_error("🐧 Could not load penguin icon: " + icon_path)
+
+	penguin_sprite.position = $EggSpawnPoint.position
+
+	# 🔽 Scale it down to fit the plot area nicely
+	penguin_sprite.scale = Vector2(0.15, 0.15)  # Adjust as needed (0.1–0.3 usually looks good)
+
+	add_child(penguin_sprite)
+
+	# Persist hatch change
 	if not skip_persist:
-		# Remove egg
 		for entry in GameState.owned_eggs:
 			var entry_id = ""
 			if typeof(entry) == TYPE_DICTIONARY:
@@ -76,7 +83,6 @@ func hatch(skip_persist: bool = false):
 				GameState.owned_eggs.erase(entry)
 				break
 
-		# Add penguin
 		GameState.owned_penguins.append({
 			"id": egg_id,
 			"type": penguin_type,
@@ -86,16 +92,18 @@ func hatch(skip_persist: bool = false):
 			"is_starter": is_starter
 		})
 		GameState.save_to_db()
-
 		emit_signal("plot_hatched", self)
 
+	# Register with CookingManager
+	if has_node("/root/CookingManager"):
+		var cm = get_node("/root/CookingManager")
+		cm.register_plot(self)
 
 func sell():
 	if is_starter:
 		print("❌ Cannot sell the starter penguin.")
 		return
 
-	# remove from owned_penguins
 	for entry in GameState.owned_penguins:
 		var entry_id: String
 		if typeof(entry) == TYPE_DICTIONARY:
@@ -123,12 +131,11 @@ func set_penguin_name(new_name: String):
 			break
 	GameState.save_to_db()
 
-
 func get_display_texture() -> Texture2D:
 	if is_egg():
 		return egg_node.get_node("Sprite2D").texture
 	else:
-		return griller_node.get_node("Sprite2D").texture
+		return penguin_sprite.texture
 
 func get_description() -> String:
 	return "Fish fed: %d / %d" % [fish_fed, FISH_TO_HATCH]

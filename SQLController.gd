@@ -21,7 +21,8 @@ func _create_player_table():
 		"total_days_played" : {"data_type": "int", "default": 0},
 		"current_energy": {"data_type": "int", "default": 10},
 		"max_energy": {"data_type": "int", "default": 10},
-		"last_logout_time": {"data_type": "int", "default": 0}
+		"last_logout_time": {"data_type": "int", "default": 0},
+		"for_sale_items": {"data_type": "text", "default": "'[]'"}
 	}
 	database.create_table("players", table)
 
@@ -64,7 +65,7 @@ func create_account(player_id: String, password: String) -> Dictionary:
 		"total_days_played": 0,
 		"current_energy": 10,
 		"max_energy": 10,
-		"last_logout_time": 0
+		"last_logout_time": 0,
 	}
 	database.insert_row("players", data)
 	return {"status": "created", "message": "Account created! You can now log in."}

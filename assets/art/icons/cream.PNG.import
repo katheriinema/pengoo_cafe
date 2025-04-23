@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://r5wg4cm34a1w"
-path="res://.godot/imported/redbean.PNG-ce1918e8b59beb2ec9a04118eda5a650.ctex"
+uid="uid://bv0sawynkfg0f"
+path="res://.godot/imported/cream.PNG-53f18c88271830b459f4f664e4a9e64e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/icons/redbean.PNG"
-dest_files=["res://.godot/imported/redbean.PNG-ce1918e8b59beb2ec9a04118eda5a650.ctex"]
+source_file="res://assets/art/icons/cream.PNG"
+dest_files=["res://.godot/imported/cream.PNG-53f18c88271830b459f4f664e4a9e64e.ctex"]
 
 [params]
 

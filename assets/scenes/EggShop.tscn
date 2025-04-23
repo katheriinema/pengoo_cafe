@@ -111,3 +111,4 @@ text = "Back to Village"
 [connection signal="pressed" from="EggContainer/EggEpic/BuyButtonEpic" to="." method="_on_buy_button_epic_pressed"]
 [connection signal="confirmed" from="ConfirmationPopup" to="." method="_on_confirmation_popup_confirmed"]
 [connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="confirmed" from="LimitPopup" to="." method="_on_limit_popup_confirmed"]

@@ -5,7 +5,7 @@ signal fish_changed(new_amount)
 signal energy_changed(current, max)
 
 var player_id: String = "" 
-var password:  String = ""  
+var password: String = ""  
 var has_onboarded: bool = false
 var coins: int = 0
 var total_revenue: int = 0
@@ -15,8 +15,7 @@ var owned_eggs: Array = []
 var total_days_played: int = 0
 var current_energy: int = 10
 var max_energy: int = 10
-
-
+var for_sale_items: Array = []
 
 func sync_from_database(player_data: Dictionary):
 	coins = player_data.get("owned_money", 0)
@@ -27,28 +26,32 @@ func sync_from_database(player_data: Dictionary):
 	total_revenue = player_data.get("total_revenue", 0)
 	has_onboarded = player_data.get("has_onboarded", 0) == 1
 
-	# ⚡ Energy
 	current_energy = player_data.get("current_energy", 10)
 	max_energy = player_data.get("max_energy", 10)
 
-	# ⏱ Offline regen
+	# ⏱️ Offline energy regen
 	var last_logout = player_data.get("last_logout_time", 0)
 	var now = Time.get_unix_time_from_system()
 	var elapsed = now - last_logout
-
-	var regen_interval = 60  # 1 energy per 60 seconds
+	var regen_interval = 60  # 1 per 60s
 	var energy_to_add = int(elapsed / regen_interval)
 
 	if energy_to_add > 0 and current_energy < max_energy:
-		var new_energy = min(current_energy + energy_to_add, max_energy)
-		current_energy = new_energy
-		print("Offline energy restored: +%d (now %d)" % [energy_to_add, new_energy])
+		current_energy = min(current_energy + energy_to_add, max_energy)
+		print("Offline energy restored: +%d (now %d)" % [energy_to_add, current_energy])
 
+	# 📦 Restore for_sale_items
+	var raw = player_data.get("for_sale_items", "[]")
+	var json = JSON.new()
+	if json.parse(raw) == OK and typeof(json.data) == TYPE_ARRAY:
+		for_sale_items = json.data
+	else:
+		for_sale_items = []
 
 func get_save_data() -> Dictionary:
 	return {
 		"player_id": player_id,
-		"password": "", 
+		"password": "",
 		"owned_money": coins,
 		"total_revenue": total_revenue,
 		"fish_count": fish_inventory,
@@ -58,12 +61,12 @@ func get_save_data() -> Dictionary:
 		"has_onboarded": int(has_onboarded),
 		"current_energy": current_energy,
 		"max_energy": max_energy,
-		"last_logout_time": Time.get_unix_time_from_system()
+		"last_logout_time": Time.get_unix_time_from_system(),
+		"for_sale_items": JSON.stringify(for_sale_items)
 	}
 
 func save_to_db():
 	var data = get_save_data()
-	data["last_logout_time"] = Time.get_unix_time_from_system()
 	SqlController.update_player_data(data)
 
 func spend_coins(amount: int) -> bool:
@@ -78,7 +81,7 @@ func add_coins(amount: int):
 	coins += amount
 	emit_signal("coins_changed", coins)
 	save_to_db()
-	
+
 func add_fish(amount: int = 1):
 	fish_inventory += amount
 	emit_signal("fish_changed", fish_inventory)
