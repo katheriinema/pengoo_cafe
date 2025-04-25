@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://sol1hkpt0a05"
-path="res://.godot/imported/taiyaki_items.png-e9fb7b0f4c9fc97d20fe8d697aaa50ff.ctex"
+uid="uid://cj2oe5edibkiw"
+path="res://.godot/imported/chocolate_items.png-704d3bdaf1e6b78f2756d09cd8fad2cc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/penguin_items/taiyaki_items.png"
-dest_files=["res://.godot/imported/taiyaki_items.png-e9fb7b0f4c9fc97d20fe8d697aaa50ff.ctex"]
+source_file="res://assets/art/penguin_items/chocolate_items.png"
+dest_files=["res://.godot/imported/chocolate_items.png-704d3bdaf1e6b78f2756d09cd8fad2cc.ctex"]
 
 [params]
 

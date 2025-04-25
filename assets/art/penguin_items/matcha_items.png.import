@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://sol1hkpt0a05"
-path="res://.godot/imported/taiyaki_items.png-e9fb7b0f4c9fc97d20fe8d697aaa50ff.ctex"
+uid="uid://x8bbwjetgc8c"
+path="res://.godot/imported/matcha_items.png-e6dd34c564124f64e4186c3326c197c2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/penguin_items/taiyaki_items.png"
-dest_files=["res://.godot/imported/taiyaki_items.png-e9fb7b0f4c9fc97d20fe8d697aaa50ff.ctex"]
+source_file="res://assets/art/penguin_items/matcha_items.png"
+dest_files=["res://.godot/imported/matcha_items.png-e6dd34c564124f64e4186c3326c197c2.ctex"]
 
 [params]
 

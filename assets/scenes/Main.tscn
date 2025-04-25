@@ -148,5 +148,15 @@ position = Vector2(75, 486)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("8_cb1w8")
 
+[node name="InfoLabel" type="Label" parent="UI"]
+z_index = 1
+offset_left = 531.0
+offset_top = 47.0
+offset_right = 765.0
+offset_bottom = 100.0
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="CookingManager" type="Node" parent="."]
 script = ExtResource("7_3qypx")

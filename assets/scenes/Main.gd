@@ -117,6 +117,7 @@ func _spawn_plot(data: Dictionary, idx: int, hatched: bool):
 	var egg_id = data.get("id", "")
 	var plot_index = int(data.get("plot_index", idx))
 	var panel_description = TYPE_DESCRIPTIONS.get(egg_type, "")
+	var level = data.get("level", 1)
 
 	if used_plot_indices.has(plot_index):
 		return
@@ -130,6 +131,7 @@ func _spawn_plot(data: Dictionary, idx: int, hatched: bool):
 	plot.penguin_name = data.get("name", "")
 	plot.plot_index = plot_index
 	plot.panel_description = panel_description
+	plot.level = data.get("level", 1)
 
 	if plot_index < spawn_points.size():
 		var sp = spawn_points[plot_index]

@@ -20,18 +20,33 @@ var penguin_sprite   : Sprite2D
 var plot_index       : int = 0
 var rarity           : String = "common"
 var is_starter       : bool = false
-var overlay_node: Node2D 
+var overlay_node     : Node2D
 
+const MAX_LEVEL = 99
+const BASE_UPGRADE_COST = 100
+const UPGRADE_MULTIPLIER = 1.2
+
+const RARITY_MULTIPLIERS = {
+	"common": 1.0,
+	"rare": 1.5,
+	"epic": 2.5
+}
+
+var level: int = 1
+
+@onready var progress_bar: ProgressBar = $ProgressBar
 
 func _ready():
-	# Spawn the egg visual
 	egg_node = egg_scene.instantiate()
 	egg_node.position = $EggSpawnPoint.position
-	egg_node.rarity = rarity  # 👈 Pass rarity to the egg
+	egg_node.rarity = rarity
 	add_child(egg_node)
 
 	add_to_group("plots")
 	$Area2D.connect("input_event", Callable(self, "_on_area_input"))
+
+	progress_bar.visible = false
+	progress_bar.value = 0.0
 
 func _on_area_input(_v, event, _s):
 	if event is InputEventMouseButton and event.pressed:
@@ -54,7 +69,6 @@ func hatch(skip_persist: bool = false):
 		return
 	is_hatched = true
 
-	# Remove egg
 	if egg_node:
 		egg_node.queue_free()
 
@@ -66,24 +80,14 @@ func hatch(skip_persist: bool = false):
 		push_error("🐧 Could not load penguin icon: " + icon_path)
 
 	penguin_sprite.position = $EggSpawnPoint.position + Vector2(10, -10)
-
-	# 🔽 Scale it down to fit the plot area nicely
-	penguin_sprite.scale = Vector2(0.15, 0.15)  # Adjust as needed (0.1–0.3 usually looks good)
-
+	penguin_sprite.scale = Vector2(0.15, 0.15)
 	add_child(penguin_sprite)
-	
+
 	load_overlay()
 
-	# Persist hatch change
 	if not skip_persist:
 		for entry in GameState.owned_eggs:
-			var entry_id = ""
-			if typeof(entry) == TYPE_DICTIONARY:
-				entry_id = entry["id"]
-			else:
-				entry_id = entry
-
-			if entry_id == egg_id:
+			if typeof(entry) == TYPE_DICTIONARY and entry["id"] == egg_id:
 				GameState.owned_eggs.erase(entry)
 				break
 
@@ -92,13 +96,13 @@ func hatch(skip_persist: bool = false):
 			"type": penguin_type,
 			"rarity": rarity,
 			"name": "",
+			"level": level,
 			"plot_index": plot_index,
 			"is_starter": is_starter
 		})
 		GameState.save_to_db()
 		emit_signal("plot_hatched", self)
 
-	# Register with CookingManager
 	if has_node("/root/CookingManager"):
 		var cm = get_node("/root/CookingManager")
 		cm.register_plot(self)
@@ -108,17 +112,12 @@ func sell():
 		print("❌ Cannot sell the starter penguin.")
 		return
 
-	for entry in GameState.owned_penguins:
-		var entry_id: String
-		if typeof(entry) == TYPE_DICTIONARY:
-			entry_id = entry["id"]
-		else:
-			entry_id = entry
-		if entry_id == egg_id:
-			GameState.owned_penguins.erase(entry)
-			break
+	var rarity_multiplier = RARITY_MULTIPLIERS.get(rarity, 1.0)
+	var sell_price = int(rarity_multiplier * (level * level * UPGRADE_MULTIPLIER + BASE_UPGRADE_COST))
 
-	GameState.add_coins(100)
+	GameState.add_coins(sell_price)
+	GameState.owned_penguins = GameState.owned_penguins.filter(func(p): return p["id"] != egg_id)
+	GameState.save_to_db()
 	queue_free()
 
 func is_egg() -> bool:
@@ -145,15 +144,13 @@ func get_description() -> String:
 	return "Fish fed: %d / %d" % [fish_fed, FISH_TO_HATCH]
 
 func get_panel_description() -> String:
-	return panel_description
-	
+	return "Level %d • %s" % [level, panel_description]
+
 func load_overlay():
 	if overlay_node:
 		overlay_node.queue_free()
 
 	var overlay_path = "res://assets/art/penguin_items/%s_items.png" % penguin_type
-	print("🔍 Loading overlay for:", penguin_type, "→", overlay_path)
-
 	if ResourceLoader.exists(overlay_path):
 		var tex = load(overlay_path)
 		overlay_node = Sprite2D.new()
@@ -163,6 +160,41 @@ func load_overlay():
 		overlay_node.z_index = 100
 		overlay_node.z_as_relative = false
 		add_child(overlay_node)
-		print("✅ Overlay loaded:", overlay_path)
 	else:
 		push_warning("⚠️ Overlay not found for: " + penguin_type)
+
+func show_panel_message(msg: String):
+	if has_node("/root/Main/UI/InfoLabel"):
+		var label = get_node("/root/Main/UI/InfoLabel")
+		label.text = msg
+		label.visible = true
+		await get_tree().create_timer(2).timeout
+		label.visible = false
+
+func get_upgrade_cost() -> int:
+	return int(BASE_UPGRADE_COST + level * level * UPGRADE_MULTIPLIER)
+
+func upgrade():
+	if level >= MAX_LEVEL:
+		show_panel_message("🐧 Max level reached!")
+		return
+
+	var cost = get_upgrade_cost()
+	if not GameState.spend_coins(cost):
+		show_panel_message("❌ Not enough coins to upgrade.")
+		return
+
+	level += 1
+
+	for penguin in GameState.owned_penguins:
+		if typeof(penguin) == TYPE_DICTIONARY and penguin.get("id", "") == egg_id:
+			penguin["level"] = level
+			break
+
+	GameState.save_to_db()
+	show_panel_message("🆙 Penguin leveled up to %d!" % level)
+
+func update_progress(ratio: float):
+	if progress_bar:
+		progress_bar.value = clamp(ratio, 0.0, 1.0)
+		progress_bar.visible = ratio < 1.0
