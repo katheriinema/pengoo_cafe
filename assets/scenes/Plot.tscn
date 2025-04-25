@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://btxpxukho8u7j"]
 
-[ext_resource type="Texture2D" uid="uid://cp8wumq6vpla5" path="res://assets/art/placeholders/Untitled_design-removebg-preview (1).png" id="1_1wxft"]
 [ext_resource type="Script" uid="uid://cwalsg0fw43bb" path="res://assets/scenes/Plot.gd" id="1_5txkn"]
+[ext_resource type="Texture2D" uid="uid://b6m6wybvtsi75" path="res://assets/art/plots/snow_plot.png" id="2_5txkn"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5txkn"]
 radius = 67.0
@@ -11,8 +11,8 @@ height = 208.0
 script = ExtResource("1_5txkn")
 
 [node name="LandSprite" type="Sprite2D" parent="."]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_1wxft")
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("2_5txkn")
 
 [node name="EggSpawnPoint" type="Marker2D" parent="."]
 z_index = 1

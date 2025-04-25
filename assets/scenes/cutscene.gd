@@ -17,12 +17,12 @@ const CAPTION_FADE = 0.3 # caption fade duration
 
 func _ready():
 	panels = [
-		preload("res://assets/cutscenes/first.png"),
-		preload("res://assets/cutscenes/second.png"),
-		preload("res://assets/cutscenes/third.png"),
-		preload("res://assets/cutscenes/fourth.png"),
-		preload("res://assets/cutscenes/fifth.png"),
-		preload("res://assets/cutscenes/sixth.png"),
+		preload("res://assets/art/cutscenes/first.png"),
+		preload("res://assets/art/cutscenes/second.png"),
+		preload("res://assets/art/cutscenes/third.png"),
+		preload("res://assets/art/cutscenes/fourth.png"),
+		preload("res://assets/art/cutscenes/fifth.png"),
+		preload("res://assets/art/cutscenes/sixth.png"),
 	]
 	captions = [
 		"Once a bustling penguin colony thrived on the ice…",

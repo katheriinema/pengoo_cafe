@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://2cdm06jg3yua"]
+[gd_scene load_steps=3 format=3 uid="uid://2cdm06jg3yua"]
 
 [ext_resource type="Script" uid="uid://bg8tyfb3qhf5e" path="res://assets/scenes/login.gd" id="1_2rp5k"]
+[ext_resource type="Texture2D" uid="uid://cn870pghlrdxx" path="res://assets/art/others/main_bg (1).png" id="2_kj5ca"]
 
 [node name="Login" type="Control"]
 layout_mode = 3
@@ -9,14 +10,30 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_2rp5k")
 
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1536.0
+offset_bottom = 1024.0
+scale = Vector2(0.831627, 0.703632)
+texture = ExtResource("2_kj5ca")
+
+[node name="LogoLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 420.0
+offset_top = 215.0
+offset_right = 810.0
+offset_bottom = 334.0
+
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_right = 174.0
-offset_bottom = 201.0
+offset_left = 528.0
+offset_top = 360.0
+offset_right = 702.0
+offset_bottom = 561.0
 
-[node name="Label" type="Label" parent="VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "Enter Username"
+text = "Start Game"
 horizontal_alignment = 1
 
 [node name="UsernameInput" type="LineEdit" parent="VBoxContainer"]

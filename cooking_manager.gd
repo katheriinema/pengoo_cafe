@@ -1,11 +1,11 @@
 extends Node
 
 const COOK_TIMES = {
-	"taiyaki":   20,
-	"redbean":   20,
-	"chocolate": 20,
-	"cream":     20,
-	"matcha":    40
+	"taiyaki":   5,
+	"redbean":   5,
+	"chocolate": 5,
+	"cream":     5,
+	"matcha":    5
 }
 
 const TAIYAKI_PRICES = {
@@ -119,13 +119,25 @@ func _emit_selling_item(ingredient_type: String, payout: int, persist := true):
 	row.mouse_filter = Control.MOUSE_FILTER_STOP
 
 	var icon = TextureRect.new()
-	icon.texture = load("res://assets/icons/%s.png" % ingredient_type)
-	icon.custom_minimum_size = Vector2(32, 32)
-	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	icon.texture = load("res://assets/art/icons/%s_icon.png" % ingredient_type)
+	icon.custom_minimum_size = Vector2(64, 64)
+	icon.stretch_mode = TextureRect.STRETCH_SCALE
+	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 
 	var label = Label.new()
-	label.text = "+$%d  %s Taiyaki" % [payout, ingredient_type.capitalize()]
+	label.text = "+$%s" % payout
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+
+	# Set font using LabelSettings
+	var font_data = load("res://assets/fonts/Sniglet-Regular.ttf")
+	var font = FontFile.new()
+	font.font_data = font_data
+
+	var settings = LabelSettings.new()
+	settings.font = font
+	settings.font_size = 24
+	settings.font_color = Color(0.7, 0.5, 0.1, 1.0)
+	label.label_settings = settings
 
 	row.add_child(icon)
 	row.add_child(label)

@@ -49,7 +49,7 @@ func show_for_plot(plot):
 		action_btn.text    = "Sell"
 
 		# ——— Load the icon from disk ———
-		var icon_path = "%s%s.png" % [icon_folder, plot.penguin_type]
+		var icon_path = "res://assets/art/icons/%s_icon.png" % plot.penguin_type
 		if ResourceLoader.exists(icon_path):
 			skill_icon.texture = load(icon_path)
 			skill_icon.visible = true

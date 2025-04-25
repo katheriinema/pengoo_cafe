@@ -2,7 +2,7 @@
 extends Control
 
 @export var penguin_card_scene : PackedScene
-@export var icon_folder         : String      = "res://assets/art/icons/"  # same folder
+@export var icon_folder         : String      = "res://assets/art/penguins/"  # same folder
 
 @onready var penguin_grid = $RightPanel/PenguinScroll/PenguinGrid
 
@@ -35,7 +35,7 @@ func populate_penguins():
 		card.get_node("PenguinName").text = p_name
 
 		# ——— Load the correct icon PNG ———
-		var icon_path = "%s%s.png" % [icon_folder, p_type]
+		var icon_path = "res://assets/art/penguins/%s_penguin.png" % p_type
 		if ResourceLoader.exists(icon_path):
 			card.get_node("PenguinImage").texture = load(icon_path)
 		else:

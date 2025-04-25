@@ -1,7 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://dmoj3jca7lrq3"]
 
-[ext_resource type="Texture2D" uid="uid://ntafgyn84ekx" path="res://assets/art/placeholders/penguin.png" id="1_l3flk"]
-[ext_resource type="FontFile" path="res://assets/art/Sniglet-Regular.ttf" id="2_qomv7"]
+[ext_resource type="FontFile" uid="uid://cd1aioybntas7" path="res://assets/fonts/Sniglet-Regular.ttf" id="2_qomv7"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_l3flk"]
+load_path = "res://.godot/imported/penguin.png-334da637f7e671f349460ac462aab35d.ctex"
 
 [node name="PenguinCard" type="VBoxContainer"]
 custom_minimum_size = Vector2(200, 300)
@@ -12,7 +14,7 @@ scale = Vector2(0.252894, 0.224)
 [node name="PenguinImage" type="TextureRect" parent="."]
 layout_mode = 2
 size_flags_vertical = 4
-texture = ExtResource("1_l3flk")
+texture = SubResource("CompressedTexture2D_l3flk")
 expand_mode = 5
 stretch_mode = 5
 

@@ -20,11 +20,14 @@ var penguin_sprite   : Sprite2D
 var plot_index       : int = 0
 var rarity           : String = "common"
 var is_starter       : bool = false
+var overlay_node: Node2D 
+
 
 func _ready():
 	# Spawn the egg visual
 	egg_node = egg_scene.instantiate()
 	egg_node.position = $EggSpawnPoint.position
+	egg_node.rarity = rarity  # 👈 Pass rarity to the egg
 	add_child(egg_node)
 
 	add_to_group("plots")
@@ -55,20 +58,21 @@ func hatch(skip_persist: bool = false):
 	if egg_node:
 		egg_node.queue_free()
 
-	# Add penguin sprite using correct icon
 	penguin_sprite = Sprite2D.new()
-	var icon_path = "%s%s.png" % [icon_folder, penguin_type]
+	var icon_path = "res://assets/art/penguins/%s_penguin.png" % penguin_type
 	if ResourceLoader.exists(icon_path):
 		penguin_sprite.texture = load(icon_path)
 	else:
 		push_error("🐧 Could not load penguin icon: " + icon_path)
 
-	penguin_sprite.position = $EggSpawnPoint.position
+	penguin_sprite.position = $EggSpawnPoint.position + Vector2(10, -10)
 
 	# 🔽 Scale it down to fit the plot area nicely
 	penguin_sprite.scale = Vector2(0.15, 0.15)  # Adjust as needed (0.1–0.3 usually looks good)
 
 	add_child(penguin_sprite)
+	
+	load_overlay()
 
 	# Persist hatch change
 	if not skip_persist:
@@ -142,3 +146,23 @@ func get_description() -> String:
 
 func get_panel_description() -> String:
 	return panel_description
+	
+func load_overlay():
+	if overlay_node:
+		overlay_node.queue_free()
+
+	var overlay_path = "res://assets/art/penguin_items/%s_items.png" % penguin_type
+	print("🔍 Loading overlay for:", penguin_type, "→", overlay_path)
+
+	if ResourceLoader.exists(overlay_path):
+		var tex = load(overlay_path)
+		overlay_node = Sprite2D.new()
+		overlay_node.texture = tex
+		overlay_node.position = $EggSpawnPoint.position + Vector2(0, 40)
+		overlay_node.scale = Vector2(0.15, 0.15)
+		overlay_node.z_index = 100
+		overlay_node.z_as_relative = false
+		add_child(overlay_node)
+		print("✅ Overlay loaded:", overlay_path)
+	else:
+		push_warning("⚠️ Overlay not found for: " + penguin_type)

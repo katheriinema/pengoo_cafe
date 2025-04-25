@@ -1,9 +1,11 @@
 [gd_scene load_steps=6 format=3 uid="uid://d0fvsix37pfps"]
 
-[ext_resource type="Texture2D" uid="uid://bo8omeirysftt" path="res://assets/art/placeholders/Untitled_design-removebg-preview (2).png" id="1_5uoda"]
 [ext_resource type="Script" uid="uid://dcj05jiqbuq2p" path="res://assets/scenes/fishing.gd" id="1_hjnv8"]
-[ext_resource type="Texture2D" uid="uid://ntafgyn84ekx" path="res://assets/art/placeholders/penguin.png" id="2_hjnv8"]
-[ext_resource type="Texture2D" uid="uid://d8cypenrecic" path="res://assets/art/placeholders/fishbutton.png" id="4_moqas"]
+[ext_resource type="Texture2D" path="res://assets/art/icons/user.PNG" id="2_hjnv8"]
+[ext_resource type="Texture2D" uid="uid://d8cypenrecic" path="res://assets/art/others/fishbutton.png" id="4_moqas"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_moqas"]
+load_path = "res://.godot/imported/pond.png-fa22570f15efdaba97a60c7cb7181fee.ctex"
 
 [sub_resource type="FontFile" id="FontFile_moqas"]
 subpixel_positioning = 0
@@ -29,13 +31,13 @@ cache/0/30/0/scale = 1.0
 script = ExtResource("1_hjnv8")
 
 [node name="Pond" type="Sprite2D" parent="."]
-position = Vector2(380, 490)
-scale = Vector2(1.748, 1.446)
-texture = ExtResource("1_5uoda")
+position = Vector2(397, 454)
+scale = Vector2(0.731812, 0.587844)
+texture = SubResource("CompressedTexture2D_moqas")
 
 [node name="Penguin" type="Sprite2D" parent="."]
-position = Vector2(854, 380)
-scale = Vector2(0.656863, 0.715686)
+position = Vector2(808, 388)
+scale = Vector2(0.4, 0.436)
 texture = ExtResource("2_hjnv8")
 
 [node name="UI" type="CanvasLayer" parent="."]

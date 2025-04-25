@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://ch220igetl3l4"]
+[gd_scene load_steps=6 format=3 uid="uid://ch220igetl3l4"]
 
 [ext_resource type="Script" uid="uid://jvb3ptapnvcr" path="res://assets/scenes/egg_shop.gd" id="1_u7tvb"]
-[ext_resource type="Texture2D" uid="uid://bepho4g61xivc" path="res://assets/art/placeholders/Untitled_design-removebg-preview.png" id="2_y22a4"]
-[ext_resource type="FontFile" uid="uid://cd1aioybntas7" path="res://assets/art/Sniglet-Regular.ttf" id="3_b2nem"]
+[ext_resource type="Texture2D" uid="uid://ca2o8m1mtcwdg" path="res://assets/art/eggs/common_egg.png" id="2_y22a4"]
+[ext_resource type="Texture2D" uid="uid://706dj704s1x8" path="res://assets/art/eggs/rare_egg.png" id="3_4w2ju"]
+[ext_resource type="FontFile" uid="uid://cd1aioybntas7" path="res://assets/fonts/Sniglet-Regular.ttf" id="3_b2nem"]
+[ext_resource type="Texture2D" uid="uid://dcgiwvyk33ntw" path="res://assets/art/eggs/epic_egg.png" id="4_xo7jn"]
 
 [node name="EggShop" type="Node2D"]
 script = ExtResource("1_u7tvb")
@@ -20,6 +22,7 @@ layout_mode = 2
 
 [node name="CommonEgg" type="Sprite2D" parent="EggContainer/EggCommon"]
 position = Vector2(27, -175)
+scale = Vector2(0.4, 0.4)
 texture = ExtResource("2_y22a4")
 
 [node name="PriceLabel" type="Label" parent="EggContainer/EggCommon"]
@@ -37,7 +40,8 @@ layout_mode = 2
 
 [node name="RareEgg" type="Sprite2D" parent="EggContainer/EggRare"]
 position = Vector2(27, -175)
-texture = ExtResource("2_y22a4")
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("3_4w2ju")
 
 [node name="PriceLabel" type="Label" parent="EggContainer/EggRare"]
 layout_mode = 2
@@ -54,7 +58,8 @@ layout_mode = 2
 
 [node name="EpicEgg" type="Sprite2D" parent="EggContainer/EggEpic"]
 position = Vector2(36, -175)
-texture = ExtResource("2_y22a4")
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("4_xo7jn")
 
 [node name="PriceLabel" type="Label" parent="EggContainer/EggEpic"]
 layout_mode = 2

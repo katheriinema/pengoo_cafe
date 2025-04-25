@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://c2vcp2b2m8vw4"]
 
-[ext_resource type="Texture2D" uid="uid://ntafgyn84ekx" path="res://assets/art/placeholders/penguin.png" id="1_bgklu"]
 [ext_resource type="Script" uid="uid://pexv4vlbnu4b" path="res://assets/scenes/user_profile.gd" id="1_ywsak"]
 [ext_resource type="PackedScene" uid="uid://dmoj3jca7lrq3" path="res://assets/scenes/PenguinCard.tscn" id="2_ttceo"]
-[ext_resource type="Texture2D" uid="uid://b4qxj5lb1snrw" path="res://assets/art/placeholders/igloo_home.png" id="4_oioyv"]
-[ext_resource type="FontFile" uid="uid://cd1aioybntas7" path="res://assets/art/Sniglet-Regular.ttf" id="7_cs7eh"]
+[ext_resource type="Texture2D" uid="uid://b1pxh3yax0yat" path="res://assets/art/others/user.png" id="4_5b6e3"]
+[ext_resource type="Texture2D" uid="uid://dys7hquio6rr" path="res://assets/art/others/igloo_home.png" id="4_oioyv"]
+[ext_resource type="FontFile" uid="uid://cd1aioybntas7" path="res://assets/fonts/Sniglet-Regular.ttf" id="7_cs7eh"]
 
 [node name="UserProfile" type="Control"]
 layout_mode = 3
@@ -40,12 +40,12 @@ text = "Username"
 [node name="UserPenguinImage" type="TextureRect" parent="LeftPanel"]
 custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
-offset_left = 38.0
-offset_top = 64.0
-offset_right = 446.0
-offset_bottom = 676.0
-scale = Vector2(0.675042, 0.642829)
-texture = ExtResource("1_bgklu")
+offset_left = 72.0
+offset_top = 152.0
+offset_right = 1352.0
+offset_bottom = 1432.0
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("4_5b6e3")
 stretch_mode = 5
 
 [node name="DaysPlayed" type="Label" parent="LeftPanel"]
@@ -83,15 +83,17 @@ offset_bottom = 40.0
 
 [node name="PenguinScroll" type="ScrollContainer" parent="RightPanel"]
 layout_mode = 2
-offset_left = 448.0
-offset_top = 139.0
-offset_right = 1280.0
-offset_bottom = 694.0
+offset_left = 514.0
+offset_top = 98.0
+offset_right = 1346.0
+offset_bottom = 653.0
 horizontal_scroll_mode = 0
 
 [node name="PenguinGrid" type="GridContainer" parent="RightPanel/PenguinScroll"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/h_separation = -30
+theme_override_constants/v_separation = -50
 columns = 4
 
 [node name="ExitButton" type="Button" parent="."]

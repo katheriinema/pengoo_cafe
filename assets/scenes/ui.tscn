@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cxg65c2rdyrs3"]
 
-[ext_resource type="Texture2D" uid="uid://d8cypenrecic" path="res://assets/art/placeholders/fishbutton.png" id="1_21nk7"]
+[ext_resource type="Texture2D" uid="uid://d8cypenrecic" path="res://assets/art/others/fishbutton.png" id="1_21nk7"]
 
 [sub_resource type="FontFile" id="FontFile_moqas"]
 subpixel_positioning = 0

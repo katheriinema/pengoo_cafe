@@ -1,11 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://ddl368sfmifvu"]
+[gd_scene load_steps=10 format=3 uid="uid://ddl368sfmifvu"]
 
 [ext_resource type="Script" uid="uid://dsmxsvsaco7xy" path="res://assets/scenes/Main.gd" id="1_npkpr"]
-[ext_resource type="Texture2D" uid="uid://dj6ibikvkaorf" path="res://assets/art/placeholders/istockphoto-1289241322-612x612.jpg" id="2_xt100"]
-[ext_resource type="Texture2D" uid="uid://bo8omeirysftt" path="res://assets/art/placeholders/Untitled_design-removebg-preview (2).png" id="4_eruk6"]
-[ext_resource type="Texture2D" uid="uid://b4qxj5lb1snrw" path="res://assets/art/placeholders/igloo_home.png" id="4_jv468"]
-[ext_resource type="Texture2D" uid="uid://bepho4g61xivc" path="res://assets/art/placeholders/Untitled_design-removebg-preview.png" id="5_jv468"]
+[ext_resource type="Texture2D" uid="uid://cn870pghlrdxx" path="res://assets/art/others/main_bg (1).png" id="2_cb1w8"]
+[ext_resource type="Texture2D" uid="uid://cwt75on0hcsvv" path="res://assets/art/others/pond.png" id="3_34wpn"]
+[ext_resource type="Texture2D" uid="uid://qpu0tmlvonwx" path="res://assets/art/others/igloo.png" id="4_3qypx"]
+[ext_resource type="Texture2D" uid="uid://ca2o8m1mtcwdg" path="res://assets/art/eggs/common_egg.png" id="5_jv468"]
+[ext_resource type="FontFile" uid="uid://pqt8x14r650l" path="res://assets/fonts/Sniglet-ExtraBold.ttf" id="6_ajan2"]
+[ext_resource type="FontFile" uid="uid://cd1aioybntas7" path="res://assets/fonts/Sniglet-Regular.ttf" id="6_cb1w8"]
 [ext_resource type="Script" uid="uid://154kkc0fxfqi" path="res://cooking_manager.gd" id="7_3qypx"]
+[ext_resource type="Texture2D" uid="uid://b1pxh3yax0yat" path="res://assets/art/others/user.png" id="8_cb1w8"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_npkpr")
@@ -13,78 +16,84 @@ script = ExtResource("1_npkpr")
 [node name="WorldLayer" type="Node2D" parent="."]
 
 [node name="Background" type="Sprite2D" parent="WorldLayer"]
-position = Vector2(632, 360)
-scale = Vector2(2.10458, 2.31056)
-texture = ExtResource("2_xt100")
+position = Vector2(639, 360.5)
+scale = Vector2(0.832031, 0.700195)
+texture = ExtResource("2_cb1w8")
 
 [node name="PlotSpawns" type="Node2D" parent="WorldLayer"]
 
 [node name="SpawnPoint0" type="Marker2D" parent="WorldLayer/PlotSpawns"]
 z_index = 3
-position = Vector2(637, 391)
+position = Vector2(643, 438)
+scale = Vector2(1.0064, 0.991089)
 
 [node name="SpawnPoint1" type="Marker2D" parent="WorldLayer/PlotSpawns"]
-position = Vector2(419, 269)
+position = Vector2(396, 309)
 
 [node name="SpawnPoint2" type="Marker2D" parent="WorldLayer/PlotSpawns"]
-position = Vector2(871, 278)
+position = Vector2(905, 331)
 
 [node name="SpawnPoint3" type="Marker2D" parent="WorldLayer/PlotSpawns"]
-position = Vector2(406, 511)
+position = Vector2(436, 591)
 
 [node name="SpawnPoint4" type="Marker2D" parent="WorldLayer/PlotSpawns"]
-position = Vector2(880, 517)
+position = Vector2(884, 528)
 
 [node name="SpawnPoint5" type="Marker2D" parent="WorldLayer/PlotSpawns"]
-position = Vector2(251, 358)
+position = Vector2(317, 453)
 
 [node name="SpawnPoint6" type="Marker2D" parent="WorldLayer/PlotSpawns"]
-position = Vector2(1028, 369)
+position = Vector2(1062, 428)
 
 [node name="SpawnPoint7" type="Marker2D" parent="WorldLayer/PlotSpawns"]
-position = Vector2(634, 224)
+position = Vector2(678, 275)
 
 [node name="SpawnPoint8" type="Marker2D" parent="WorldLayer/PlotSpawns"]
-position = Vector2(637, 611)
+position = Vector2(702, 620)
 
 [node name="PondButton" type="TextureButton" parent="WorldLayer"]
-offset_left = 25.0
-offset_top = 594.0
-offset_right = 372.0
-offset_bottom = 701.0
-texture_normal = ExtResource("4_eruk6")
+offset_left = 28.0
+offset_top = 515.0
+offset_right = 764.0
+offset_bottom = 1132.0
+scale = Vector2(0.3, 0.255)
+texture_normal = ExtResource("3_34wpn")
 
 [node name="IglooButton" type="TextureButton" parent="WorldLayer"]
-offset_left = 139.0
-offset_top = 29.0001
-offset_right = 1675.0
-offset_bottom = 1053.0
-scale = Vector2(0.0964439, 0.0996977)
-texture_normal = ExtResource("4_jv468")
+offset_left = 1054.0
+offset_top = 539.0
+offset_right = 1736.0
+offset_bottom = 1035.0
+scale = Vector2(0.3, 0.313)
+texture_normal = ExtResource("4_3qypx")
 
 [node name="ShopButton" type="TextureButton" parent="WorldLayer"]
-offset_left = 1119.0
-offset_top = 575.0
-offset_right = 1619.0
-offset_bottom = 1075.0
-scale = Vector2(0.297125, 0.287037)
+offset_left = 13.0
+offset_top = 158.0
+offset_right = 713.0
+offset_bottom = 958.0
+scale = Vector2(0.15, 0.146)
 texture_normal = ExtResource("5_jv468")
 
 [node name="SellWindow" type="Control" parent="WorldLayer"]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 3
 anchors_preset = 0
-offset_left = 1037.0
-offset_top = 10.0
-offset_right = 1237.0
-offset_bottom = 210.0
+offset_left = 1147.0
+offset_top = 7.0
+offset_right = 1347.0
+offset_bottom = 207.0
 mouse_filter = 2
 
 [node name="Label" type="Label" parent="WorldLayer/SellWindow"]
 layout_mode = 0
-offset_right = 88.0
-offset_bottom = 23.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+offset_left = -33.0
+offset_top = 2.0
+offset_right = 120.0
+offset_bottom = 40.0
+theme_override_colors/font_color = Color(0.1, 0.2, 0.4, 1)
+theme_override_fonts/font = ExtResource("6_cb1w8")
+theme_override_font_sizes/font_size = 30
 text = "🍱 For Sale"
 horizontal_alignment = 1
 
@@ -97,27 +106,47 @@ mouse_filter = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="WorldLayer/SellWindow/ItemList"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="WorldLayer/SellWindow/ItemList/HBoxContainer"]
-layout_mode = 2
-
 [node name="Label" type="Label" parent="WorldLayer/SellWindow/ItemList/HBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.883232, 0.700171, 0, 1)
+theme_override_fonts/font = ExtResource("6_ajan2")
+theme_override_font_sizes/font_size = 24
+
+[node name="TextureRect" type="TextureRect" parent="WorldLayer/SellWindow/ItemList/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+expand_mode = 1
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="CoinLabel" type="Label" parent="UI"]
+[node name="CoinBox" type="HBoxContainer" parent="UI"]
 offset_left = 10.0
 offset_top = 10.0
-offset_right = 50.0
-offset_bottom = 33.0
-text = "Coins: 0"
+offset_right = 92.0
+offset_bottom = 40.0
 
-[node name="FishLabel" type="Label" parent="UI"]
-offset_left = 12.0
-offset_top = 50.0
-offset_right = 52.0
-offset_bottom = 73.0
-text = "Fish: 0"
+[node name="CoinIcon" type="TextureRect" parent="UI/CoinBox"]
+layout_mode = 2
+
+[node name="CoinCount" type="Label" parent="UI/CoinBox"]
+layout_mode = 2
+
+[node name="FishBox" type="HBoxContainer" parent="UI"]
+offset_left = 263.0
+offset_top = 10.0
+offset_right = 350.0
+offset_bottom = 40.0
+
+[node name="FishIcon" type="TextureRect" parent="UI/FishBox"]
+layout_mode = 2
+
+[node name="FishCount" type="Label" parent="UI/FishBox"]
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="UI"]
+position = Vector2(75, 486)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("8_cb1w8")
 
 [node name="CookingManager" type="Node" parent="."]
 script = ExtResource("7_3qypx")
