@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://2cdm06jg3yua"]
+[gd_scene load_steps=4 format=3 uid="uid://2cdm06jg3yua"]
 
 [ext_resource type="Script" uid="uid://bg8tyfb3qhf5e" path="res://assets/scenes/login.gd" id="1_2rp5k"]
 [ext_resource type="Texture2D" uid="uid://cn870pghlrdxx" path="res://assets/art/others/main_bg (1).png" id="2_kj5ca"]
+[ext_resource type="AudioStream" uid="uid://dheq4gt6qccur" path="res://assets/music/Click.mp3" id="3_m4ktq"]
 
 [node name="Login" type="Control"]
 layout_mode = 3
@@ -9,6 +10,8 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_2rp5k")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 0
@@ -55,8 +58,24 @@ text = "Login"
 layout_mode = 2
 text = "Signup"
 
-[node name="ErrorLabel" type="Label" parent="VBoxContainer"]
-layout_mode = 2
+[node name="ErrorLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 400.0
+offset_top = 521.0
+offset_right = 879.0
+offset_bottom = 544.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ClickSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_m4ktq")
 
 [connection signal="pressed" from="VBoxContainer/LoginButton" to="." method="_on_login_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/SignupButton" to="." method="_on_signup_button_pressed"]

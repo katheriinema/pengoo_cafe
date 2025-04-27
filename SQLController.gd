@@ -1,3 +1,6 @@
+# NOTE: This SQL controller is kept as a backup during Supabase development.
+# Can be removed once cloud sync is fully deployed.
+
 extends Control
 
 var database : SQLite

@@ -3,36 +3,33 @@ extends Node2D
 signal plot_clicked(plot)
 signal plot_hatched(plot)
 
-@export var egg_scene        : PackedScene = preload("res://assets/scenes/Egg.tscn")
-@export var penguin_type     : String      = "taiyaki"
-@export var panel_description: String      = "Your first penguin!!!"
-@export var icon_folder      : String      = "res://assets/art/icons/"
+@export var egg_scene: PackedScene = preload("res://assets/scenes/Egg.tscn")
+@export var penguin_type: String = "taiyaki"
+@export var panel_description: String = "Your first penguin!!!"
+@export var icon_folder: String = "res://assets/art/icons/"
 
 const FISH_TO_HATCH = 3
-
-var fish_fed     : int    = 0
-var is_hatched   : bool   = false
-var penguin_name : String = ""
-var egg_id       : String = ""  # set by Main.gd when spawning
-
-var egg_node         : Node2D
-var penguin_sprite   : Sprite2D
-var plot_index       : int = 0
-var rarity           : String = "common"
-var is_starter       : bool = false
-var overlay_node     : Node2D
-
 const MAX_LEVEL = 99
 const BASE_UPGRADE_COST = 100
 const UPGRADE_MULTIPLIER = 1.2
-
 const RARITY_MULTIPLIERS = {
 	"common": 1.0,
 	"rare": 1.5,
 	"epic": 2.5
 }
 
+var fish_fed: int = 0
+var is_hatched: bool = false
+var penguin_name: String = ""
+var egg_id: String = ""
+var plot_index: int = 0
+var rarity: String = "common"
+var is_starter: bool = false
 var level: int = 1
+
+var egg_node: Node2D
+var penguin_sprite: Sprite2D
+var overlay_node: Node2D
 
 @onready var progress_bar: ProgressBar = $ProgressBar
 
@@ -58,11 +55,16 @@ func feed():
 	if not GameState.spend_fish():
 		emit_signal("plot_clicked", self)
 		return
+
 	fish_fed += 1
 	if fish_fed >= FISH_TO_HATCH:
 		hatch()
 	else:
 		emit_signal("plot_clicked", self)
+
+	var sound = get_tree().root.get_node_or_null("Main/UpgradeSound")
+	if sound:
+		sound.play()
 
 func hatch(skip_persist: bool = false):
 	if is_hatched:
@@ -95,7 +97,7 @@ func hatch(skip_persist: bool = false):
 			"id": egg_id,
 			"type": penguin_type,
 			"rarity": rarity,
-			"name": "",
+			"name": penguin_name,
 			"level": level,
 			"plot_index": plot_index,
 			"is_starter": is_starter
@@ -119,6 +121,10 @@ func sell():
 	GameState.owned_penguins = GameState.owned_penguins.filter(func(p): return p["id"] != egg_id)
 	GameState.save_to_db()
 	queue_free()
+
+	var sound = get_tree().root.get_node_or_null("Main/SellSound")
+	if sound:
+		sound.play()
 
 func is_egg() -> bool:
 	return not is_hatched
@@ -155,7 +161,7 @@ func load_overlay():
 		var tex = load(overlay_path)
 		overlay_node = Sprite2D.new()
 		overlay_node.texture = tex
-		overlay_node.position = $EggSpawnPoint.position + Vector2(0, 40)
+		overlay_node.position = $EggSpawnPoint.position + Vector2(0, 30)
 		overlay_node.scale = Vector2(0.15, 0.15)
 		overlay_node.z_index = 100
 		overlay_node.z_as_relative = false
@@ -193,6 +199,10 @@ func upgrade():
 
 	GameState.save_to_db()
 	show_panel_message("🆙 Penguin leveled up to %d!" % level)
+
+	var sound = get_tree().root.get_node_or_null("Main/UpgradeSound")
+	if sound:
+		sound.play()
 
 func update_progress(ratio: float):
 	if progress_bar:

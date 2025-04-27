@@ -1,0 +1,8 @@
+[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://cxfgk2o0xyf1e"]
+
+[sub_resource type="AudioEffectCapture" id="AudioEffectCapture_j3pel"]
+resource_name = "Capture"
+
+[resource]
+bus/0/effect/0/effect = SubResource("AudioEffectCapture_j3pel")
+bus/0/effect/0/enabled = false

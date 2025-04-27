@@ -149,7 +149,7 @@ func _emit_selling_item(ingredient_type: String, payout: int, persist := true):
 	row.mouse_filter = Control.MOUSE_FILTER_STOP
 
 	var icon = TextureRect.new()
-	icon.texture = load("res://assets/art/icons/%s_icon.png" % ingredient_type)
+	icon.texture = load("res://assets/art/product_icon/%s_icon.png" % ingredient_type)
 	icon.custom_minimum_size = Vector2(64, 64)
 	icon.stretch_mode = TextureRect.STRETCH_SCALE
 	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -178,6 +178,10 @@ func _emit_selling_item(ingredient_type: String, payout: int, persist := true):
 			GameState.for_sale_items = GameState.for_sale_items.filter(func(item): return item["type"] != ingredient_type or item["payout"] != payout)
 			GameState.save_to_db()
 			row.queue_free()
+			# 🔊 Play sound!
+			var sell_sound = get_tree().root.get_node("Main/SellSound")
+			if sell_sound:
+				sell_sound.play()
 	)
 
 	list.add_child(row)

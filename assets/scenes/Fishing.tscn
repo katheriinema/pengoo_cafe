@@ -1,11 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://d0fvsix37pfps"]
+[gd_scene load_steps=9 format=3 uid="uid://d0fvsix37pfps"]
 
 [ext_resource type="Script" uid="uid://dcj05jiqbuq2p" path="res://assets/scenes/fishing.gd" id="1_hjnv8"]
-[ext_resource type="Texture2D" path="res://assets/art/icons/user.PNG" id="2_hjnv8"]
+[ext_resource type="Texture2D" uid="uid://bfr2f2athv5em" path="res://assets/art/others/fishing_bg.png" id="2_fcvyq"]
+[ext_resource type="Texture2D" uid="uid://d2xkcg2jmcth5" path="res://assets/art/others/fishing_pond.png" id="3_5qlmh"]
+[ext_resource type="AudioStream" uid="uid://e8ociw7i6bgj" path="res://assets/music/fishing_music.mp3" id="4_7e43f"]
 [ext_resource type="Texture2D" uid="uid://d8cypenrecic" path="res://assets/art/others/fishbutton.png" id="4_moqas"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_moqas"]
-load_path = "res://.godot/imported/pond.png-fa22570f15efdaba97a60c7cb7181fee.ctex"
+[ext_resource type="AudioStream" uid="uid://dheq4gt6qccur" path="res://assets/music/Click.mp3" id="5_5b7xe"]
+[ext_resource type="AudioStream" uid="uid://ct6p5k86uv15d" path="res://assets/music/Sell.mp3" id="6_fcvyq"]
 
 [sub_resource type="FontFile" id="FontFile_moqas"]
 subpixel_positioning = 0
@@ -30,15 +31,15 @@ cache/0/30/0/scale = 1.0
 [node name="Fishing" type="Node2D"]
 script = ExtResource("1_hjnv8")
 
-[node name="Pond" type="Sprite2D" parent="."]
-position = Vector2(397, 454)
-scale = Vector2(0.731812, 0.587844)
-texture = SubResource("CompressedTexture2D_moqas")
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(640, 358.5)
+scale = Vector2(0.833333, 0.696289)
+texture = ExtResource("2_fcvyq")
 
-[node name="Penguin" type="Sprite2D" parent="."]
-position = Vector2(808, 388)
-scale = Vector2(0.4, 0.436)
-texture = ExtResource("2_hjnv8")
+[node name="Pond" type="Sprite2D" parent="."]
+position = Vector2(530, 435)
+scale = Vector2(0.665711, 0.587844)
+texture = ExtResource("3_5qlmh")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -69,10 +70,10 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="FishButton" type="TextureButton" parent="UI"]
-offset_left = 980.0
-offset_top = 347.0
-offset_right = 2004.0
-offset_bottom = 1371.0
+offset_left = 939.0
+offset_top = 406.0
+offset_right = 1963.0
+offset_bottom = 1430.0
 scale = Vector2(0.2, 0.2)
 texture_normal = ExtResource("4_moqas")
 texture_pressed = ExtResource("4_moqas")
@@ -126,12 +127,30 @@ offset_bottom = 72.0
 theme_override_font_sizes/font_size = 24
 text = "Done Fishing 🎣"
 
+[node name="SuccessBox" type="ColorRect" parent="UI"]
+offset_left = 629.0
+offset_top = 645.0
+offset_right = 669.0
+offset_bottom = 685.0
+color = Color(0, 0.717647, 0, 1)
+
 [node name="EnergyRegenTimer" type="Timer" parent="."]
 wait_time = 60.0
 autostart = true
 
 [node name="CountdownTimer" type="Timer" parent="."]
 autostart = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_7e43f")
+autoplay = true
+parameters/looping = true
+
+[node name="ClickSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_5b7xe")
+
+[node name="SuccessSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_fcvyq")
 
 [connection signal="pressed" from="UI/FishButton" to="." method="_on_fish_button_pressed"]
 [connection signal="pressed" from="UI/ExitButton" to="." method="_on_exit_button_pressed"]

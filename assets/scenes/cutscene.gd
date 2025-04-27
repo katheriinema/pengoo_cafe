@@ -6,16 +6,18 @@ signal cutscene_finished
 @onready var caption_bg = $CaptionBg
 @onready var caption = $Caption
 
-var panels = [] # Array[Texture2D]
-var captions = [] # Array[String]
+var panels = []
+var captions = []
 var idx = -1
 var tweening = false
 
-const FADE_TIME = 0.5 # background & backdrop fade duration
-const CAPTION_DELAY = 0.5 # wait before caption starts
-const CAPTION_FADE = 0.3 # caption fade duration
+const FADE_TIME = 0.5
+const CAPTION_DELAY = 0.5
+const CAPTION_FADE = 0.3
 
 func _ready():
+	MusicManager.pause_music()
+
 	panels = [
 		preload("res://assets/art/cutscenes/first.png"),
 		preload("res://assets/art/cutscenes/second.png"),
@@ -34,45 +36,36 @@ func _ready():
 	]
 	_show_next()
 
-# Listen for click to advance (after fade‑in completes)
 func _input(event):
 	if not tweening \
-		and panel.visible \
-		and event is InputEventMouseButton \
-		and event.button_index == MOUSE_BUTTON_LEFT \
-		and event.pressed:
+	and panel.visible \
+	and event is InputEventMouseButton \
+	and event.button_index == MOUSE_BUTTON_LEFT \
+	and event.pressed:
 		_fade_out()
 
 func _show_next():
 	idx += 1
 	if idx >= panels.size():
-		emit_signal("cutscene_finished")
-		queue_free() # <— remove this Control from the scene
+		_finalize_cutscene()
 		return
 
-	# Setup panel & caption
 	panel.texture = panels[idx]
 	caption.text = captions[idx]
 	panel.visible = true
 	caption.visible = true
 	caption_bg.visible = true
 
-	# Reset all alphas
 	panel.modulate.a = 0.0
 	caption_bg.modulate.a = 0.0
 	caption.modulate.a = 0.0
 
-	# Fade in sequence
 	tweening = true
 	var tw = create_tween()
-	# 1) fade in BG and backdrop
 	tw.tween_property(panel, "modulate:a", 1.0, FADE_TIME)
 	tw.tween_property(caption_bg, "modulate:a", 0.5, FADE_TIME)
-	# 2) wait before caption
 	tw.tween_interval(CAPTION_DELAY)
-	# 3) fade in caption faster
 	tw.tween_property(caption, "modulate:a", 1.0, CAPTION_FADE)
-	# 4) once done, allow click
 	tw.tween_callback(Callable(self, "_on_fade_in_done"))
 
 func _on_fade_in_done():
@@ -87,6 +80,10 @@ func _fade_out():
 	tw.tween_callback(Callable(self, "_show_next"))
 
 func _on_finish_pressed():
+	_finalize_cutscene()
+
+func _finalize_cutscene():
 	GameState.has_onboarded = true
 	GameState.save_to_db()
-	get_tree().change_scene_to_file("res://assets/scenes/onboarding.tscn")  # or Main.tscn if you prefer
+	await get_tree().create_timer(1.0).timeout
+	get_tree().change_scene_to_file("res://assets/scenes/onboarding.tscn")

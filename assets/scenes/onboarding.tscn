@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://d15l6wnnrt1c1"]
+[gd_scene load_steps=3 format=3 uid="uid://d15l6wnnrt1c1"]
 
 [ext_resource type="Script" uid="uid://bjovcyfv071r6" path="res://onboarding.gd" id="1_vub3d"]
+[ext_resource type="Texture2D" uid="uid://cn870pghlrdxx" path="res://assets/art/others/main_bg (1).png" id="2_htxrk"]
 
 [node name="Onboarding" type="Node2D"]
 script = ExtResource("1_vub3d")
@@ -26,30 +27,15 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -345.0
-offset_top = 12.0
+offset_top = 53.0
 offset_right = 345.0
-offset_bottom = 38.0
+offset_bottom = 79.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 18
-text = "Hi Chief! Name your village:"
+text = "Welcome! Here's your first egg!"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
-
-[node name="NameInput" type="LineEdit" parent="UI/ChatPanel"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -34.2813
-offset_top = -15.5
-offset_right = 34.2813
-offset_bottom = 15.5
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="OkButton" type="Button" parent="UI/ChatPanel"]
 layout_mode = 1
@@ -58,24 +44,29 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -18.0
-offset_top = -40.0
-offset_right = 18.0
-offset_bottom = -9.0
+offset_left = -17.0
+offset_top = -45.0
+offset_right = 19.0
+offset_bottom = -14.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "OK!"
 
-[node name="CoinLabel" type="Label" parent="UI"]
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 50.0
-offset_bottom = 33.0
-text = "Coins: 0"
+[node name="UsernameInput" type="LineEdit" parent="UI/ChatPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.0
+offset_top = 4.5
+offset_right = 68.0
+offset_bottom = 35.5
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="FishLabel" type="Label" parent="UI"]
-offset_left = 12.0
-offset_top = 50.0
-offset_right = 52.0
-offset_bottom = 73.0
-text = "Fish: 0"
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(640.5, 358.5)
+scale = Vector2(0.832682, 0.700195)
+texture = ExtResource("2_htxrk")

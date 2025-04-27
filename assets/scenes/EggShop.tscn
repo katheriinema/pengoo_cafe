@@ -1,13 +1,21 @@
-[gd_scene load_steps=6 format=3 uid="uid://ch220igetl3l4"]
+[gd_scene load_steps=9 format=3 uid="uid://ch220igetl3l4"]
 
 [ext_resource type="Script" uid="uid://jvb3ptapnvcr" path="res://assets/scenes/egg_shop.gd" id="1_u7tvb"]
+[ext_resource type="Texture2D" uid="uid://dob3ljgrtwfm6" path="res://assets/art/others/profile_bg.png" id="2_he725"]
 [ext_resource type="Texture2D" uid="uid://ca2o8m1mtcwdg" path="res://assets/art/eggs/common_egg.png" id="2_y22a4"]
 [ext_resource type="Texture2D" uid="uid://706dj704s1x8" path="res://assets/art/eggs/rare_egg.png" id="3_4w2ju"]
 [ext_resource type="FontFile" uid="uid://cd1aioybntas7" path="res://assets/fonts/Sniglet-Regular.ttf" id="3_b2nem"]
 [ext_resource type="Texture2D" uid="uid://dcgiwvyk33ntw" path="res://assets/art/eggs/epic_egg.png" id="4_xo7jn"]
+[ext_resource type="AudioStream" uid="uid://dheq4gt6qccur" path="res://assets/music/Click.mp3" id="6_kjaek"]
+[ext_resource type="AudioStream" uid="uid://ct6p5k86uv15d" path="res://assets/music/Sell.mp3" id="7_he725"]
 
 [node name="EggShop" type="Node2D"]
 script = ExtResource("1_u7tvb")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(639.5, 361)
+scale = Vector2(0.832682, 0.705078)
+texture = ExtResource("2_he725")
 
 [node name="EggContainer" type="HBoxContainer" parent="."]
 offset_top = 536.0
@@ -27,6 +35,7 @@ texture = ExtResource("2_y22a4")
 
 [node name="PriceLabel" type="Label" parent="EggContainer/EggCommon"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.1, 0.2, 0.596, 1)
 theme_override_font_sizes/font_size = 30
 text = "$10"
 horizontal_alignment = 1
@@ -45,6 +54,7 @@ texture = ExtResource("3_4w2ju")
 
 [node name="PriceLabel" type="Label" parent="EggContainer/EggRare"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.1, 0.2, 0.596, 1)
 theme_override_font_sizes/font_size = 30
 text = "$50"
 horizontal_alignment = 1
@@ -63,6 +73,7 @@ texture = ExtResource("4_xo7jn")
 
 [node name="PriceLabel" type="Label" parent="EggContainer/EggEpic"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.1, 0.2, 0.596, 1)
 theme_override_font_sizes/font_size = 30
 text = "$200"
 horizontal_alignment = 1
@@ -110,6 +121,12 @@ theme_override_font_sizes/font_size = 24
 text = "Back to Village"
 
 [node name="LimitPopup" type="ConfirmationDialog" parent="."]
+
+[node name="ClickSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_kjaek")
+
+[node name="BuySound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_he725")
 
 [connection signal="pressed" from="EggContainer/EggCommon/BuyButtonCommon" to="." method="_on_buy_button_common_pressed"]
 [connection signal="pressed" from="EggContainer/EggRare/BuyButtonRare" to="." method="_on_buy_button_rare_pressed"]

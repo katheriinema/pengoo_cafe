@@ -3,7 +3,6 @@
 [ext_resource type="FontFile" uid="uid://cd1aioybntas7" path="res://assets/fonts/Sniglet-Regular.ttf" id="2_qomv7"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_l3flk"]
-load_path = "res://.godot/imported/penguin.png-334da637f7e671f349460ac462aab35d.ctex"
 
 [node name="PenguinCard" type="VBoxContainer"]
 custom_minimum_size = Vector2(200, 300)

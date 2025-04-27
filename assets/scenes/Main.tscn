@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ddl368sfmifvu"]
+[gd_scene load_steps=13 format=3 uid="uid://ddl368sfmifvu"]
 
 [ext_resource type="Script" uid="uid://dsmxsvsaco7xy" path="res://assets/scenes/Main.gd" id="1_npkpr"]
 [ext_resource type="Texture2D" uid="uid://cn870pghlrdxx" path="res://assets/art/others/main_bg (1).png" id="2_cb1w8"]
@@ -9,6 +9,9 @@
 [ext_resource type="FontFile" uid="uid://cd1aioybntas7" path="res://assets/fonts/Sniglet-Regular.ttf" id="6_cb1w8"]
 [ext_resource type="Script" uid="uid://154kkc0fxfqi" path="res://cooking_manager.gd" id="7_3qypx"]
 [ext_resource type="Texture2D" uid="uid://b1pxh3yax0yat" path="res://assets/art/others/user.png" id="8_cb1w8"]
+[ext_resource type="AudioStream" uid="uid://ct6p5k86uv15d" path="res://assets/music/Sell.mp3" id="10_ittna"]
+[ext_resource type="AudioStream" uid="uid://dhb61p4ce4r7l" path="res://assets/music/Upgrade.mp3" id="11_cfala"]
+[ext_resource type="AudioStream" uid="uid://dheq4gt6qccur" path="res://assets/music/Click.mp3" id="12_0tkjb"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_npkpr")
@@ -160,3 +163,13 @@ vertical_alignment = 1
 
 [node name="CookingManager" type="Node" parent="."]
 script = ExtResource("7_3qypx")
+
+[node name="SellSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_ittna")
+
+[node name="UpgradeSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_cfala")
+volume_db = -5.0
+
+[node name="ClickSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_0tkjb")
