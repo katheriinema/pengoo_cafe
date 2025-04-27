@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameState="*res://assets/scripts/GameState.gd"
-SqlController="res://SQLController.gd"
 CookingManager="*res://cooking_manager.gd"
 MusicManager="*res://music_manager.tscn"
 

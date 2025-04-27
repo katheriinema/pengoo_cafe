@@ -115,6 +115,16 @@ func _on_http_response(result, code, headers, body):
 	var text = body.get_string_from_utf8()
 	print("📥 HTTP Response [%d]: %s" % [code, text])
 
+	if text.strip_edges() == "":
+		print("✅ Empty body, treating as successful login (code: %d)" % code)
+		# You might still want to move to next scene, even if body empty
+		if code == 200 or code == 201 or code == 204:
+			# No need to parse, just move on
+			GameState.load_from_db()
+		else:
+			show_error("Unexpected error with empty body.")
+		return
+
 	var json = JSON.new()
 	if json.parse(text) != OK:
 		show_error("Failed to parse response.")
@@ -127,7 +137,6 @@ func _on_http_response(result, code, headers, body):
 			GameState.access_token = data["access_token"]
 			GameState.user_id = data["user"]["id"]
 			_create_initial_user_data()
-			# ✅ Set callback BEFORE calling load
 			GameState.on_load_callback = Callable(self, "_on_user_data_loaded")
 			GameState.load_from_db()
 		else:
