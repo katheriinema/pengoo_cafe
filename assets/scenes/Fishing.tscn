@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://d0fvsix37pfps"]
+[gd_scene load_steps=10 format=3 uid="uid://d0fvsix37pfps"]
 
 [ext_resource type="Script" uid="uid://dcj05jiqbuq2p" path="res://assets/scenes/fishing.gd" id="1_hjnv8"]
 [ext_resource type="Texture2D" uid="uid://bfr2f2athv5em" path="res://assets/art/others/fishing_bg.png" id="2_fcvyq"]
 [ext_resource type="Texture2D" uid="uid://d2xkcg2jmcth5" path="res://assets/art/others/fishing_pond.png" id="3_5qlmh"]
+[ext_resource type="FontFile" uid="uid://cd1aioybntas7" path="res://assets/fonts/Sniglet-Regular.ttf" id="4_5qlmh"]
 [ext_resource type="AudioStream" uid="uid://e8ociw7i6bgj" path="res://assets/music/fishing_music.mp3" id="4_7e43f"]
 [ext_resource type="Texture2D" uid="uid://d8cypenrecic" path="res://assets/art/others/fishbutton.png" id="4_moqas"]
 [ext_resource type="AudioStream" uid="uid://dheq4gt6qccur" path="res://assets/music/Click.mp3" id="5_5b7xe"]
@@ -32,13 +33,13 @@ cache/0/30/0/scale = 1.0
 script = ExtResource("1_hjnv8")
 
 [node name="Background" type="Sprite2D" parent="."]
-position = Vector2(640, 358.5)
-scale = Vector2(0.833333, 0.696289)
+position = Vector2(642, 360)
+scale = Vector2(0.843099, 0.707519)
 texture = ExtResource("2_fcvyq")
 
 [node name="Pond" type="Sprite2D" parent="."]
-position = Vector2(530, 435)
-scale = Vector2(0.665711, 0.587844)
+position = Vector2(527, 437)
+scale = Vector2(0.698448, 0.683245)
 texture = ExtResource("3_5qlmh")
 
 [node name="UI" type="CanvasLayer" parent="."]
@@ -64,6 +65,7 @@ offset_left = -55.5
 offset_right = 55.5
 offset_bottom = 88.0
 grow_horizontal = 2
+theme_override_fonts/font = ExtResource("4_5qlmh")
 theme_override_font_sizes/font_size = 64
 text = "0"
 horizontal_alignment = 1
@@ -85,10 +87,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 8.0
-offset_top = -160.0
-offset_right = 105.0
-offset_bottom = -103.0
+offset_left = 241.0
+offset_top = -134.0
+offset_right = 338.0
+offset_bottom = -77.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = SubResource("FontFile_moqas")
@@ -101,8 +103,10 @@ anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -336.0
-offset_bottom = 67.0
+offset_top = 12.0
+offset_bottom = 79.0
 grow_horizontal = 0
+theme_override_fonts/font = ExtResource("4_5qlmh")
 theme_override_font_sizes/font_size = 48
 text = "Energy: 9 / 10"
 
@@ -113,8 +117,9 @@ anchor_right = 1.0
 offset_left = -296.0
 offset_top = 72.0
 offset_right = -31.0
-offset_bottom = 121.0
+offset_bottom = 102.0
 grow_horizontal = 0
+theme_override_fonts/font = ExtResource("4_5qlmh")
 theme_override_font_sizes/font_size = 24
 text = "Next Energy In: 60s"
 horizontal_alignment = 2
@@ -124,6 +129,7 @@ offset_left = 40.0
 offset_top = 24.0
 offset_right = 248.0
 offset_bottom = 72.0
+theme_override_fonts/font = ExtResource("4_5qlmh")
 theme_override_font_sizes/font_size = 24
 text = "Done Fishing 🎣"
 

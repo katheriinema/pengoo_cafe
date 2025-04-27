@@ -48,8 +48,8 @@ func _on_buy_button_pressed(egg_type: String):
 func _on_confirmation_popup_confirmed():
 	var taken = GameState.get_used_plot_indices()
 
-	if taken.size() >= 9:
-		limit_popup.dialog_text = "All 9 plots are full!"
+	if taken.size() >= 17:
+		limit_popup.dialog_text = "All 17 plots are full!"
 		limit_popup.popup_centered()
 		return
 
@@ -60,11 +60,11 @@ func _on_confirmation_popup_confirmed():
 
 	# 🧠 Get next available plot index
 	var next_index = 0
-	while taken.has(next_index) and next_index < 9:
+	while taken.has(next_index) and next_index < 17:
 		next_index += 1
 
-	if next_index >= 9:
-		limit_popup.dialog_text = "All 9 plots are full!"
+	if next_index >= 17:
+		limit_popup.dialog_text = "All 17 plots are full!"
 		limit_popup.popup_centered()
 		return
 

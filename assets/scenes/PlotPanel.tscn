@@ -1,14 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://bsd0b28onfchl"]
+[gd_scene load_steps=6 format=3 uid="uid://bsd0b28onfchl"]
 
 [ext_resource type="Script" uid="uid://dgbt0i6th1pak" path="res://assets/scenes/PlotPanel.gd" id="1_wt4pj"]
+[ext_resource type="FontFile" uid="uid://cd1aioybntas7" path="res://assets/fonts/Sniglet-Regular.ttf" id="2_vrw7s"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wt4pj"]
-bg_color = Color(0.633787, 0.851093, 0.985798, 1)
+bg_color = Color(0.567, 0.7128, 0.81, 1)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
-border_color = Color(0.578156, 0.829034, 0.98236, 1)
+border_color = Color(0.568627, 0.713726, 0.811765, 1)
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
@@ -44,6 +45,7 @@ offset_top = 20.0
 offset_bottom = 60.0
 grow_horizontal = 2
 focus_mode = 1
+theme_override_fonts/font = ExtResource("2_vrw7s")
 theme_override_styles/focus = SubResource("StyleBoxFlat_vrw7s")
 theme_override_styles/normal = SubResource("StyleBoxFlat_mgqk2")
 alignment = 1
@@ -75,6 +77,7 @@ offset_top = -200.0
 offset_bottom = -100.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_vrw7s")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -91,6 +94,7 @@ offset_right = 92.0
 offset_bottom = -23.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_vrw7s")
 theme_override_font_sizes/font_size = 20
 
 [node name="SkillIcon" type="TextureRect" parent="."]
@@ -122,3 +126,4 @@ offset_right = 108.0
 offset_bottom = 249.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_vrw7s")

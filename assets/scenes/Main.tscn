@@ -31,42 +31,66 @@ position = Vector2(643, 438)
 scale = Vector2(1.0064, 0.991089)
 
 [node name="SpawnPoint1" type="Marker2D" parent="WorldLayer/PlotSpawns"]
-position = Vector2(396, 309)
+position = Vector2(521, 352)
 
 [node name="SpawnPoint2" type="Marker2D" parent="WorldLayer/PlotSpawns"]
-position = Vector2(905, 331)
+position = Vector2(808, 340)
 
 [node name="SpawnPoint3" type="Marker2D" parent="WorldLayer/PlotSpawns"]
-position = Vector2(436, 591)
+position = Vector2(514, 543)
 
 [node name="SpawnPoint4" type="Marker2D" parent="WorldLayer/PlotSpawns"]
-position = Vector2(884, 528)
+position = Vector2(391, 442)
 
 [node name="SpawnPoint5" type="Marker2D" parent="WorldLayer/PlotSpawns"]
-position = Vector2(317, 453)
+position = Vector2(363, 280)
 
 [node name="SpawnPoint6" type="Marker2D" parent="WorldLayer/PlotSpawns"]
-position = Vector2(1062, 428)
+position = Vector2(964, 272)
 
 [node name="SpawnPoint7" type="Marker2D" parent="WorldLayer/PlotSpawns"]
-position = Vector2(678, 275)
+position = Vector2(651, 252)
 
 [node name="SpawnPoint8" type="Marker2D" parent="WorldLayer/PlotSpawns"]
-position = Vector2(702, 620)
+position = Vector2(954, 441)
+
+[node name="SpawnPoint9" type="Marker2D" parent="WorldLayer/PlotSpawns"]
+position = Vector2(643, 639)
+
+[node name="SpawnPoint10" type="Marker2D" parent="WorldLayer/PlotSpawns"]
+position = Vector2(793, 533)
+
+[node name="SpawnPoint11" type="Marker2D" parent="WorldLayer/PlotSpawns"]
+position = Vector2(890, 643)
+
+[node name="SpawnPoint12" type="Marker2D" parent="WorldLayer/PlotSpawns"]
+position = Vector2(424, 646)
+
+[node name="SpawnPoint13" type="Marker2D" parent="WorldLayer/PlotSpawns"]
+position = Vector2(176, 652)
+
+[node name="SpawnPoint14" type="Marker2D" parent="WorldLayer/PlotSpawns"]
+position = Vector2(279, 557)
+
+[node name="SpawnPoint15" type="Marker2D" parent="WorldLayer/PlotSpawns"]
+position = Vector2(105, 529)
+
+[node name="SpawnPoint16" type="Marker2D" parent="WorldLayer/PlotSpawns"]
+position = Vector2(1089, 384)
 
 [node name="PondButton" type="TextureButton" parent="WorldLayer"]
-offset_left = 28.0
-offset_top = 515.0
-offset_right = 764.0
-offset_bottom = 1132.0
+offset_left = 47.0
+offset_top = 265.0
+offset_right = 783.0
+offset_bottom = 882.0
 scale = Vector2(0.3, 0.255)
 texture_normal = ExtResource("3_34wpn")
 
 [node name="IglooButton" type="TextureButton" parent="WorldLayer"]
-offset_left = 1054.0
-offset_top = 539.0
-offset_right = 1736.0
-offset_bottom = 1035.0
+offset_left = 1022.0
+offset_top = 501.0
+offset_right = 1704.0
+offset_bottom = 997.0
 scale = Vector2(0.3, 0.313)
 texture_normal = ExtResource("4_3qypx")
 
@@ -87,18 +111,6 @@ offset_top = 7.0
 offset_right = 1347.0
 offset_bottom = 207.0
 mouse_filter = 2
-
-[node name="Label" type="Label" parent="WorldLayer/SellWindow"]
-layout_mode = 0
-offset_left = -33.0
-offset_top = 2.0
-offset_right = 120.0
-offset_bottom = 40.0
-theme_override_colors/font_color = Color(0.1, 0.2, 0.4, 1)
-theme_override_fonts/font = ExtResource("6_cb1w8")
-theme_override_font_sizes/font_size = 30
-text = "🍱 For Sale"
-horizontal_alignment = 1
 
 [node name="ItemList" type="VBoxContainer" parent="WorldLayer/SellWindow"]
 layout_mode = 0
@@ -147,17 +159,22 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="UI"]
-position = Vector2(75, 486)
+position = Vector2(1219, 620)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("8_cb1w8")
 
 [node name="InfoLabel" type="Label" parent="UI"]
 z_index = 1
-offset_left = 531.0
-offset_top = 47.0
-offset_right = 765.0
-offset_bottom = 100.0
-theme_override_font_sizes/font_size = 30
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 100.0
+offset_right = 100.0
+offset_bottom = 153.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("6_cb1w8")
+theme_override_font_sizes/font_size = 22
 horizontal_alignment = 1
 vertical_alignment = 1
 

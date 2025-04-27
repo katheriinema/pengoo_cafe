@@ -86,11 +86,14 @@ text = "Buy"
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = 1045.0
+offset_left = 1027.0
 offset_top = 21.0
 offset_right = 1259.0
 offset_bottom = 94.0
 grow_horizontal = 0
+theme_override_colors/font_color = Color(0.0980392, 0.2, 0.596078, 1)
+theme_override_fonts/font = ExtResource("3_b2nem")
+theme_override_font_sizes/font_size = 20
 horizontal_alignment = 2
 
 [node name="ConfirmationPopup" type="ConfirmationDialog" parent="."]
@@ -107,6 +110,8 @@ offset_right = 807.0
 offset_bottom = 199.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(0.0980392, 0.2, 0.596078, 1)
+theme_override_fonts/font = ExtResource("3_b2nem")
 theme_override_font_sizes/font_size = 32
 horizontal_alignment = 1
 vertical_alignment = 1

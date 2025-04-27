@@ -85,5 +85,6 @@ func _on_finish_pressed():
 func _finalize_cutscene():
 	GameState.has_onboarded = true
 	GameState.save_to_db()
+	MusicManager.resume_music()
 	await get_tree().create_timer(1.0).timeout
 	get_tree().change_scene_to_file("res://assets/scenes/onboarding.tscn")

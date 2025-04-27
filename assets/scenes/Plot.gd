@@ -82,7 +82,7 @@ func hatch(skip_persist: bool = false):
 		push_error("🐧 Could not load penguin icon: " + icon_path)
 
 	penguin_sprite.position = $EggSpawnPoint.position + Vector2(10, -10)
-	penguin_sprite.scale = Vector2(0.15, 0.15)
+	penguin_sprite.scale = Vector2(0.1, 0.1)
 	add_child(penguin_sprite)
 
 	load_overlay()
@@ -162,7 +162,7 @@ func load_overlay():
 		overlay_node = Sprite2D.new()
 		overlay_node.texture = tex
 		overlay_node.position = $EggSpawnPoint.position + Vector2(0, 30)
-		overlay_node.scale = Vector2(0.15, 0.15)
+		overlay_node.scale = Vector2(0.1, 0.1)
 		overlay_node.z_index = 100
 		overlay_node.z_as_relative = false
 		add_child(overlay_node)

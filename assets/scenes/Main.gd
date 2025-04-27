@@ -28,7 +28,7 @@ func _ready():
 
 	# 🧠 Setup spawn points
 	if plot_spawns:
-		for i in range(9):
+		for i in range(17):
 			var node_name = "SpawnPoint" + str(i)
 			var sp = plot_spawns.get_node_or_null(node_name)
 			if sp == null:
