@@ -76,13 +76,21 @@ func signup(email: String, password: String):
 	http.request(SUPABASE_URL + "/auth/v1/signup", headers, HTTPClient.METHOD_POST, JSON.stringify(body))
 
 func login(email: String, password: String):
-	var body = { "email": email, "password": password }
+	var body = {
+		"email": email,
+		"password": password
+	}
 	var headers = [
 		"Content-Type: application/json",
-		"apikey: " + SUPABASE_KEY
+		"apikey: " + SUPABASE_KEY,
+		"Authorization: Bearer " + SUPABASE_KEY
 	]
-	http.request(SUPABASE_URL + "/auth/v1/token?grant_type=password", headers, HTTPClient.METHOD_POST, JSON.stringify(body))
-
+	http.request(
+		SUPABASE_URL + "/auth/v1/token?grant_type=password",
+		headers,
+		HTTPClient.METHOD_POST,
+		JSON.stringify(body)
+	)
 # ☁️ Save/load progress to/from Supabase
 func save_to_db(callback: Callable = Callable()):
 	if access_token == "" or user_id == "":
