@@ -105,6 +105,23 @@ func _on_save_to_db_response(result, code, headers, body):
 	else:
 		push_error("❌ Failed to save user data. Code: %d, Response: %s" % [code, text])
 
+func load_from_db(should_redirect := true):
+	_should_redirect = should_redirect
+
+	if access_token == "" or user_id == "":
+		print("⚠️ Cannot load, user not logged in")
+		return
+
+	print("🌐 Sending load_from_db request...")
+
+	var headers = [
+		"apikey: " + SUPABASE_KEY,
+		"Authorization: Bearer " + access_token
+	]
+	var url = "%s/rest/v1/user_data?id=eq.%s" % [SUPABASE_URL, user_id]
+	http.request(url, headers, HTTPClient.METHOD_GET)
+	http.request_completed.connect(_on_load_response)
+
 func _on_load_response(result, code, headers, body):
 	http.request_completed.disconnect(_on_load_response)
 
