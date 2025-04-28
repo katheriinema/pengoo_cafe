@@ -41,7 +41,9 @@ func signup(email: String, password: String):
 	var body = { "email": email, "password": password }
 	var headers = [
 		"Content-Type: application/json",
-		"apikey: " + SUPABASE_KEY
+		"apikey: " + SUPABASE_KEY,
+		"Authorization: Bearer " + access_token,
+		"Accept-Encoding: identity" # ✨ ADD THIS
 	]
 	http.request(SUPABASE_URL + "/auth/v1/signup", headers, HTTPClient.METHOD_POST, JSON.stringify(body))
 
@@ -49,7 +51,9 @@ func login(email: String, password: String):
 	var body = { "email": email, "password": password }
 	var headers = [
 		"Content-Type: application/json",
-		"apikey: " + SUPABASE_KEY
+		"apikey: " + SUPABASE_KEY,
+		"Authorization: Bearer " + access_token,
+		"Accept-Encoding: identity" # ✨ ADD THIS
 	]
 	http.request(SUPABASE_URL + "/auth/v1/token?grant_type=password", headers, HTTPClient.METHOD_POST, JSON.stringify(body))
 
@@ -80,7 +84,8 @@ func save_to_db(callback: Callable = Callable()):
 	var headers = [
 		"Content-Type: application/json",
 		"apikey: " + SUPABASE_KEY,
-		"Authorization: Bearer " + access_token
+		"Authorization: Bearer " + access_token,
+		"Accept-Encoding: identity" # ✨ ADD THIS
 	]
 
 	var url = "%s/rest/v1/user_data?on_conflict=id" % SUPABASE_URL
@@ -116,7 +121,8 @@ func load_from_db(should_redirect := true):
 
 	var headers = [
 		"apikey: " + SUPABASE_KEY,
-		"Authorization: Bearer " + access_token
+		"Authorization: Bearer " + access_token,
+		"Accept-Encoding: identity" # ✨ ADD THIS
 	]
 	var url = "%s/rest/v1/user_data?id=eq.%s" % [SUPABASE_URL, user_id]
 	http.request(url, headers, HTTPClient.METHOD_GET)

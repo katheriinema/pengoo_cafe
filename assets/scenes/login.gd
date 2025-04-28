@@ -39,7 +39,8 @@ func _create_initial_user_data():
 	var headers = [
 		"Content-Type: application/json",
 		"apikey: " + GameState.SUPABASE_KEY,
-		"Authorization: Bearer " + GameState.access_token
+		"Authorization: Bearer " + GameState.access_token,
+		"Accept-Encoding: identity" # ✨ ADD THIS
 	]
 
 	var body = {
@@ -95,7 +96,8 @@ func _on_login_button_pressed():
 	}
 	var headers = [
 		"Content-Type: application/json",
-		"apikey: " + GameState.SUPABASE_KEY
+		"apikey: " + GameState.SUPABASE_KEY,
+		"Accept-Encoding: identity" # ✨ ADD THIS
 	]
 	
 	http.request_completed.connect(_on_login_response)
@@ -120,7 +122,8 @@ func _on_signup_button_pressed():
 	}
 	var headers = [
 		"Content-Type: application/json",
-		"apikey: " + GameState.SUPABASE_KEY
+		"apikey: " + GameState.SUPABASE_KEY,
+		"Accept-Encoding: identity" # ✨ ADD THIS
 	]
 	
 	http.request_completed.connect(_on_signup_response)
