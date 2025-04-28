@@ -1,5 +1,7 @@
 extends Control
 
+const PROXY_URL = "https://supabase-proxy-qtrc.vercel.app/api/proxy?url="
+
 @onready var login_button = $VBoxContainer/LoginButton
 @onready var signup_button = $VBoxContainer/SignupButton
 @onready var username_input = $VBoxContainer/UsernameInput
@@ -33,14 +35,13 @@ func _ready():
 	apply_theme()
 
 func _create_initial_user_data():
-	var create_http = HTTPRequest.new() # ✨ FIXED HERE ✨
+	var create_http = HTTPRequest.new()
 	add_child(create_http)
 
 	var headers = [
 		"Content-Type: application/json",
 		"apikey: " + GameState.SUPABASE_KEY,
-		"Authorization: Bearer " + GameState.access_token,
-		"Accept-Encoding: identity" # ✨ ADD THIS
+		"Authorization: Bearer " + GameState.access_token
 	]
 
 	var body = {
@@ -58,16 +59,13 @@ func _create_initial_user_data():
 		"last_logout_time": int(Time.get_unix_time_from_system())
 	}
 
-	create_http.request_completed.connect(_on_create_user_data_response.bind(create_http)) # ✨
-	create_http.request(
-		GameState.SUPABASE_URL + "/rest/v1/user_data",
-		headers,
-		HTTPClient.METHOD_POST,
-		JSON.stringify(body)
-	)
+	var url = PROXY_URL + GameState.SUPABASE_URL + "/rest/v1/user_data"
+
+	create_http.request_completed.connect(_on_create_user_data_response.bind(create_http))
+	create_http.request(url, headers, HTTPClient.METHOD_POST, JSON.stringify(body))
 
 func _on_create_user_data_response(result, code, headers, body, create_http):
-	create_http.queue_free() # ✨ Clean up request node
+	create_http.queue_free()
 
 	var text = body.get_string_from_utf8()
 	print("📥 Create user_data Response [%d]: %s" % [code, text])
@@ -85,7 +83,8 @@ func _on_create_user_data_response(result, code, headers, body, create_http):
 func _on_login_button_pressed():
 	var email = username_input.text.strip_edges()
 	var password = password_input.text.strip_edges()
-	if click_sound: click_sound.play()
+	if click_sound:
+		click_sound.play()
 	if email == "" or password == "":
 		show_error("Please enter both username and password.")
 		return
@@ -96,22 +95,19 @@ func _on_login_button_pressed():
 	}
 	var headers = [
 		"Content-Type: application/json",
-		"apikey: " + GameState.SUPABASE_KEY,
-		"Accept-Encoding: identity" # ✨ ADD THIS
+		"apikey: " + GameState.SUPABASE_KEY
 	]
-	
+
+	var url = PROXY_URL + GameState.SUPABASE_URL + "/auth/v1/token?grant_type=password"
+
 	http.request_completed.connect(_on_login_response)
-	http.request(
-		GameState.SUPABASE_URL + "/auth/v1/token?grant_type=password",
-		headers,
-		HTTPClient.METHOD_POST,
-		JSON.stringify(body)
-	)
+	http.request(url, headers, HTTPClient.METHOD_POST, JSON.stringify(body))
 
 func _on_signup_button_pressed():
 	var email = username_input.text.strip_edges()
 	var password = password_input.text.strip_edges()
-	if click_sound: click_sound.play()
+	if click_sound:
+		click_sound.play()
 	if email == "" or password == "":
 		show_error("Please enter both username and password.")
 		return
@@ -122,17 +118,13 @@ func _on_signup_button_pressed():
 	}
 	var headers = [
 		"Content-Type: application/json",
-		"apikey: " + GameState.SUPABASE_KEY,
-		"Accept-Encoding: identity" # ✨ ADD THIS
+		"apikey: " + GameState.SUPABASE_KEY
 	]
-	
+
+	var url = PROXY_URL + GameState.SUPABASE_URL + "/auth/v1/signup"
+
 	http.request_completed.connect(_on_signup_response)
-	http.request(
-		GameState.SUPABASE_URL + "/auth/v1/signup",
-		headers,
-		HTTPClient.METHOD_POST,
-		JSON.stringify(body)
-	)
+	http.request(url, headers, HTTPClient.METHOD_POST, JSON.stringify(body))
 
 func _on_login_response(result, code, headers, body):
 	http.request_completed.disconnect(_on_login_response)
@@ -146,7 +138,7 @@ func _on_login_response(result, code, headers, body):
 		return
 
 	var data = json.data
-	if typeof(data) != TYPE_DICTIONARY: # ✨ FIXED HERE ✨
+	if typeof(data) != TYPE_DICTIONARY:
 		show_error("Invalid login response format.")
 		return
 
@@ -176,7 +168,7 @@ func _on_signup_response(result, code, headers, body):
 		return
 
 	var data = json.data
-	if typeof(data) != TYPE_DICTIONARY: # ✨ FIXED HERE ✨
+	if typeof(data) != TYPE_DICTIONARY:
 		show_error("Invalid signup response format.")
 		return
 

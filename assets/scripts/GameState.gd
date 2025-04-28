@@ -2,7 +2,7 @@ extends Node
 
 # 🔐 Supabase config
 const SUPABASE_URL = "https://zefcumwyxmaazdoblhro.supabase.co"
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplZmN1bXd5eG1hYXpkb2JsaHJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU3NjU1ODUsImV4cCI6MjA2MTM0MTU4NX0.1jfCbrONobwjhSVyhMn098zKQH2Gl9vsLxA5wlWXB1c"
+const PROXY_URL = "https://supabase-proxy-qtrc.vercel.app/api/proxy?url="
 
 var user_id: String = ""
 var access_token: String = ""
@@ -28,34 +28,28 @@ var _should_redirect: bool = true
 var on_load_callback: Callable = Callable()
 var on_save_callback: Callable = Callable()
 
-
-
 @onready var http = HTTPRequest.new()
 
 func _ready():
 	add_child(http)
-
 
 # 🔐 Signup & Login
 func signup(email: String, password: String):
 	var body = { "email": email, "password": password }
 	var headers = [
 		"Content-Type: application/json",
-		"apikey: " + SUPABASE_KEY,
-		"Authorization: Bearer " + access_token,
-		"Accept-Encoding: identity" # ✨ ADD THIS
+		"apikey: " + GameState.SUPABASE_KEY
 	]
-	http.request(SUPABASE_URL + "/auth/v1/signup", headers, HTTPClient.METHOD_POST, JSON.stringify(body))
+	var url = PROXY_URL + SUPABASE_URL + "/auth/v1/signup"
+	http.request(url, headers, HTTPClient.METHOD_POST, JSON.stringify(body))
 
 func login(email: String, password: String):
 	var body = { "email": email, "password": password }
 	var headers = [
-		"Content-Type: application/json",
-		"apikey: " + SUPABASE_KEY,
-		"Authorization: Bearer " + access_token,
-		"Accept-Encoding: identity" # ✨ ADD THIS
+		"Content-Type: application/json", "apikey: " + GameState.SUPABASE_KEY
 	]
-	http.request(SUPABASE_URL + "/auth/v1/token?grant_type=password", headers, HTTPClient.METHOD_POST, JSON.stringify(body))
+	var url = PROXY_URL + SUPABASE_URL + "/auth/v1/token?grant_type=password"
+	http.request(url, headers, HTTPClient.METHOD_POST, JSON.stringify(body))
 
 # ☁️ Save/load progress to/from Supabase
 func save_to_db(callback: Callable = Callable()):
@@ -81,25 +75,16 @@ func save_to_db(callback: Callable = Callable()):
 		"last_logout_time": int(Time.get_unix_time_from_system())
 	}
 
-	var headers = [
-		"Content-Type: application/json",
-		"apikey: " + SUPABASE_KEY,
-		"Authorization: Bearer " + access_token,
-		"Accept-Encoding: identity" # ✨ ADD THIS
-	]
+	var headers = ["Content-Type: application/json", "apikey: " + GameState.SUPABASE_KEY, "Authorization: Bearer " + access_token]
 
-	var url = "%s/rest/v1/user_data?on_conflict=id" % SUPABASE_URL
-
-	# ✨ Connect here to know when save finishes
+	var url = PROXY_URL + SUPABASE_URL + "/rest/v1/user_data?on_conflict=id"
 	http.request_completed.connect(_on_save_to_db_response)
-
 	http.request(url, headers, HTTPClient.METHOD_POST, JSON.stringify(snapshot))
 	print("🔁 UPSERT (POST with on_conflict=id) to Supabase:", url)
 	print("📦 Payload:", snapshot)
 
 func _on_save_to_db_response(result, code, headers, body):
 	http.request_completed.disconnect(_on_save_to_db_response)
-
 	var text = body.get_string_from_utf8()
 	print("📦 Save response: ", text)
 
@@ -120,17 +105,17 @@ func load_from_db(should_redirect := true):
 	print("🌐 Sending load_from_db request...")
 
 	var headers = [
-		"apikey: " + SUPABASE_KEY,
-		"Authorization: Bearer " + access_token,
-		"Accept-Encoding: identity" # ✨ ADD THIS
+		"apikey: " + GameState.SUPABASE_KEY, "Authorization: Bearer " + access_token
 	]
-	var url = "%s/rest/v1/user_data?id=eq.%s" % [SUPABASE_URL, user_id]
-	http.request(url, headers, HTTPClient.METHOD_GET)
+
+	var real_url = SUPABASE_URL + "/rest/v1/user_data?id=eq." + user_id
+	var proxy_url = PROXY_URL + real_url
+
+	http.request(proxy_url, headers, HTTPClient.METHOD_GET)
 	http.request_completed.connect(_on_load_response)
 
 func _on_load_response(result, code, headers, body):
 	http.request_completed.disconnect(_on_load_response)
-
 	var text = body.get_string_from_utf8()
 	print("📦 Load user_data response:", text)
 
@@ -157,7 +142,6 @@ func _on_load_response(result, code, headers, body):
 		_create_default_user_data()
 
 func _create_default_user_data():
-	# Fill in default values
 	coins = 500
 	fish_inventory = 10
 	current_energy = 10
@@ -169,7 +153,6 @@ func _create_default_user_data():
 	total_revenue = 0
 	total_days_played = int(Time.get_unix_time_from_system())
 
-	# Save it to Supabase
 	save_to_db(Callable(self, "_on_default_save_finished"))
 
 func _on_default_save_finished():
@@ -193,7 +176,6 @@ func sync_from_database(player_data: Dictionary):
 	current_energy = player_data.get("energy", 10)
 	max_energy = player_data.get("max_energy", 10)
 
-	# ⏱️ Offline energy regen
 	var last_logout = player_data.get("last_logout_time", 0)
 	var now = Time.get_unix_time_from_system()
 	var elapsed = now - last_logout
@@ -203,7 +185,6 @@ func sync_from_database(player_data: Dictionary):
 		current_energy = min(current_energy + energy_to_add, max_energy)
 		print("⚡ Offline energy restored: +%d (now %d)" % [energy_to_add, current_energy])
 
-	# 📦 For-sale items
 	var raw = player_data.get("for_sale_items", [])
 	for_sale_items = raw if typeof(raw) == TYPE_ARRAY else []
 
@@ -214,7 +195,6 @@ func spend_coins(amount: int) -> bool:
 		emit_signal("coins_changed", coins)
 		return true
 	return false
-
 
 func add_coins(amount: int):
 	coins += amount
