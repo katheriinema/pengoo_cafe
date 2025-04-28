@@ -116,36 +116,47 @@ func _on_load_response(result, code, headers, body):
 	var json = JSON.new()
 	if json.parse(text) != OK:
 		push_error("❌ Failed to parse user_data response.")
-		return   # <<<<<< MUST return if parsing failed!
+		return
 
 	var data = json.data
-	if data == null:
-		push_error("❌ No valid data received in load_from_db.")
-		return   # <<<<<< MUST return if data is nil!
+	if data == null or not (data is Array):
+		push_error("❌ Invalid or empty user_data.")
+		return
 
-	if data is Array:
-		if data.size() > 0:
-			# User data exists — sync it
-			sync_from_database(data[0])
-		else:
-			# No user data — create defaults
-			print("⚠️ No existing user data found, setting defaults.")
-			GameState.coins = 500
-			GameState.fish_inventory = 10
-			GameState.current_energy = 10
-			GameState.max_energy = 10
-			GameState.owned_eggs = []
-			GameState.owned_penguins = []
-			GameState.for_sale_items = []
-			GameState.has_onboarded = false
-			GameState.total_revenue = 0
-			GameState.total_days_played = int(Time.get_unix_time_from_system())
+	if data.size() > 0:
+		# ✅ User data exists — sync it
+		sync_from_database(data[0])
+
+		if on_load_callback.is_valid():
+			on_load_callback.call()
+			on_load_callback = Callable()
+	else:
+		# ❗ No data found — create a brand new save
+		print("⚠️ No existing user data found, creating default save...")
+		_create_default_user_data()
+
+func _create_default_user_data():
+	# Fill in default values
+	coins = 500
+	fish_inventory = 10
+	current_energy = 10
+	max_energy = 10
+	owned_eggs = []
+	owned_penguins = []
+	for_sale_items = []
+	has_onboarded = false
+	total_revenue = 0
+	total_days_played = int(Time.get_unix_time_from_system())
+
+	# Save it to Supabase
+	save_to_db(Callable(self, "_on_default_save_finished"))
+
+func _on_default_save_finished():
+	print("✅ Default save created.")
 
 	if on_load_callback.is_valid():
 		on_load_callback.call()
 		on_load_callback = Callable()
-
-
 
 # 🧠 Local sync logic
 func sync_from_database(player_data: Dictionary):
