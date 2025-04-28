@@ -76,12 +76,19 @@ func save_to_db(callback: Callable = Callable()):
 		"last_logout_time": int(Time.get_unix_time_from_system())
 	}
 
-	var headers = ["Content-Type: application/json", "apikey: " + GameState.SUPABASE_KEY, "Authorization: Bearer " + access_token]
+	var headers = [
+		"Content-Type: application/json",
+		"apikey: " + SUPABASE_KEY,
+		"Authorization: Bearer " + access_token,
+		"Accept-Encoding: identity"
+	]
 
-	var url = PROXY_URL + SUPABASE_URL + "/rest/v1/user_data?on_conflict=id"
+	var url = "%s/rest/v1/user_data?id=eq.%s" % [SUPABASE_URL, user_id] # 👈 NOTICE: not ?on_conflict=id now
+
 	http.request_completed.connect(_on_save_to_db_response)
-	http.request(url, headers, HTTPClient.METHOD_POST, JSON.stringify(snapshot))
-	print("🔁 UPSERT (POST with on_conflict=id) to Supabase:", url)
+
+	http.request(url, headers, HTTPClient.METHOD_PATCH, JSON.stringify(snapshot)) # ✨ PATCH now
+	print("🔁 PATCH save to Supabase:", url)
 	print("📦 Payload:", snapshot)
 
 func _on_save_to_db_response(result, code, headers, body):
@@ -89,7 +96,7 @@ func _on_save_to_db_response(result, code, headers, body):
 	var text = body.get_string_from_utf8()
 	print("📦 Save response: ", text)
 
-	if code == 201 or code == 200:
+	if code == 200 or code == 201 or code == 204:
 		print("✅ Save successful.")
 		if on_save_callback.is_valid():
 			on_save_callback.call()
