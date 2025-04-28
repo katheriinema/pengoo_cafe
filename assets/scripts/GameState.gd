@@ -34,36 +34,6 @@ var on_save_callback: Callable = Callable()
 
 func _ready():
 	add_child(http)
-	http.request_completed.connect(_on_http_response)
-
-# 🌐 Handle all HTTP responses
-func _on_http_response(result, code, headers, body):
-	var text = body.get_string_from_utf8()
-	print("💬 Supabase Response:", code, text)
-	print("🔁 Response Code:", code)
-	print("📦 Response Body:", text)
-
-	var json = JSON.new()
-	json.parse(text)
-	var response = json.data
-
-	# 1. Handle login success
-	if code == 200 or code == 201:
-		if response.has("access_token"):
-			access_token = response["access_token"]
-			user_id = response["user"]["id"]
-			print("✅ Logged in! User ID: ", user_id)
-
-		elif response is Array and response.size() > 0:
-			sync_from_database(response[0])
-			print("✅ Progress loaded from Supabase")
-
-	# 2. ✅ Handle PATCH success (204 = success, no content)
-	elif code == 204:
-		print("✅ PATCH to Supabase succeeded.")
-		if on_save_callback.is_valid():
-			on_save_callback.call()
-			on_save_callback = Callable()
 
 
 # 🔐 Signup & Login
@@ -94,6 +64,7 @@ func save_to_db(callback: Callable = Callable()):
 
 	# 🛡️ Snapshot the current data at time of save
 	var snapshot = {
+		"id": user_id, # ✨ IMPORTANT: Must include id for UPSERT to work
 		"player_id": player_id,
 		"fish_count": fish_inventory,
 		"energy": current_energy,
@@ -114,12 +85,12 @@ func save_to_db(callback: Callable = Callable()):
 		"Authorization: Bearer " + access_token
 	]
 
-	var url = "%s/rest/v1/user_data?id=eq.%s" % [SUPABASE_URL, user_id]
-	http.request(url, headers, HTTPClient.METHOD_PATCH, JSON.stringify(snapshot))
-	print("🔁 PATCH to Supabase:", url)
+	# ✨ Notice the ?on_conflict=id
+	var url = "%s/rest/v1/user_data?on_conflict=id" % SUPABASE_URL
+
+	http.request(url, headers, HTTPClient.METHOD_POST, JSON.stringify(snapshot))
+	print("🔁 UPSERT (POST with on_conflict=id) to Supabase:", url)
 	print("📦 Payload:", snapshot)
-
-
 
 func load_from_db(should_redirect := true):
 	_should_redirect = should_redirect
@@ -145,15 +116,35 @@ func _on_load_response(result, code, headers, body):
 	var json = JSON.new()
 	if json.parse(text) != OK:
 		push_error("❌ Failed to parse user_data response.")
-		return
+		return   # <<<<<< MUST return if parsing failed!
 
 	var data = json.data
-	if data is Array and data.size() > 0:
-		sync_from_database(data[0])
+	if data == null:
+		push_error("❌ No valid data received in load_from_db.")
+		return   # <<<<<< MUST return if data is nil!
+
+	if data is Array:
+		if data.size() > 0:
+			# User data exists — sync it
+			sync_from_database(data[0])
+		else:
+			# No user data — create defaults
+			print("⚠️ No existing user data found, setting defaults.")
+			GameState.coins = 500
+			GameState.fish_inventory = 10
+			GameState.current_energy = 10
+			GameState.max_energy = 10
+			GameState.owned_eggs = []
+			GameState.owned_penguins = []
+			GameState.for_sale_items = []
+			GameState.has_onboarded = false
+			GameState.total_revenue = 0
+			GameState.total_days_played = int(Time.get_unix_time_from_system())
 
 	if on_load_callback.is_valid():
 		on_load_callback.call()
-		on_load_callback = Callable()  # reset
+		on_load_callback = Callable()
+
 
 
 # 🧠 Local sync logic

@@ -31,16 +31,16 @@ func _ready():
 		signup_button.pressed.connect(_on_signup_button_pressed)
 
 	apply_theme()
-	http.request_completed.connect(_on_http_response)
 
 func _create_initial_user_data():
+	var create_http = HTTPRequest.new() # ✨ FIXED HERE ✨
+	add_child(create_http)
+
 	var headers = [
 		"Content-Type: application/json",
 		"apikey: " + GameState.SUPABASE_KEY,
 		"Authorization: Bearer " + GameState.access_token
 	]
-
-	var now = Time.get_unix_time_from_system()
 
 	var body = {
 		"id": GameState.user_id,
@@ -57,13 +57,29 @@ func _create_initial_user_data():
 		"last_logout_time": int(Time.get_unix_time_from_system())
 	}
 
-	http.request(
+	create_http.request_completed.connect(_on_create_user_data_response.bind(create_http)) # ✨
+	create_http.request(
 		GameState.SUPABASE_URL + "/rest/v1/user_data",
 		headers,
 		HTTPClient.METHOD_POST,
 		JSON.stringify(body)
 	)
 
+func _on_create_user_data_response(result, code, headers, body, create_http):
+	create_http.queue_free() # ✨ Clean up request node
+
+	var text = body.get_string_from_utf8()
+	print("📥 Create user_data Response [%d]: %s" % [code, text])
+
+	if code == 201 or code == 200:
+		print("✅ New user data created successfully.")
+	elif code == 409:
+		print("⚠️ User data already exists, skipping creation.")
+	else:
+		push_error("❌ Failed to create initial user data: %s" % text)
+
+	GameState.on_load_callback = Callable(self, "_on_user_data_loaded")
+	GameState.load_from_db()
 
 func _on_login_button_pressed():
 	var email = username_input.text.strip_edges()
@@ -81,6 +97,8 @@ func _on_login_button_pressed():
 		"Content-Type: application/json",
 		"apikey: " + GameState.SUPABASE_KEY
 	]
+	
+	http.request_completed.connect(_on_login_response)
 	http.request(
 		GameState.SUPABASE_URL + "/auth/v1/token?grant_type=password",
 		headers,
@@ -104,6 +122,8 @@ func _on_signup_button_pressed():
 		"Content-Type: application/json",
 		"apikey: " + GameState.SUPABASE_KEY
 	]
+	
+	http.request_completed.connect(_on_signup_response)
 	http.request(
 		GameState.SUPABASE_URL + "/auth/v1/signup",
 		headers,
@@ -111,41 +131,64 @@ func _on_signup_button_pressed():
 		JSON.stringify(body)
 	)
 
-func _on_http_response(result, code, headers, body):
-	var text = body.get_string_from_utf8()
-	print("📥 HTTP Response [%d]: %s" % [code, text])
+func _on_login_response(result, code, headers, body):
+	http.request_completed.disconnect(_on_login_response)
 
-	if text.strip_edges() == "":
-		print("✅ Empty body, treating as successful login (code: %d)" % code)
-		# You might still want to move to next scene, even if body empty
-		if code == 200 or code == 201 or code == 204:
-			# No need to parse, just move on
-			GameState.load_from_db()
-		else:
-			show_error("Unexpected error with empty body.")
-		return
+	var text = body.get_string_from_utf8()
+	print("📥 Login Response [%d]: %s" % [code, text])
 
 	var json = JSON.new()
 	if json.parse(text) != OK:
-		show_error("Failed to parse response.")
+		show_error("Failed to parse login response.")
 		return
 
 	var data = json.data
+	if typeof(data) != TYPE_DICTIONARY: # ✨ FIXED HERE ✨
+		show_error("Invalid login response format.")
+		return
+
+	if code == 200 or code == 201:
+		if data.has("access_token"):
+			GameState.access_token = data["access_token"]
+			GameState.user_id = data["user"]["id"]
+			GameState.on_load_callback = Callable(self, "_on_user_data_loaded")
+			GameState.load_from_db()
+		else:
+			show_error("Unexpected response from server (login).")
+	else:
+		if data.has("error"):
+			show_error(data["error"]["message"])
+		else:
+			show_error("Login error %d: %s" % [code, text])
+
+func _on_signup_response(result, code, headers, body):
+	http.request_completed.disconnect(_on_signup_response)
+
+	var text = body.get_string_from_utf8()
+	print("📥 Signup Response [%d]: %s" % [code, text])
+
+	var json = JSON.new()
+	if json.parse(text) != OK:
+		show_error("Failed to parse signup response.")
+		return
+
+	var data = json.data
+	if typeof(data) != TYPE_DICTIONARY: # ✨ FIXED HERE ✨
+		show_error("Invalid signup response format.")
+		return
 
 	if code == 200 or code == 201:
 		if data.has("access_token"):
 			GameState.access_token = data["access_token"]
 			GameState.user_id = data["user"]["id"]
 			_create_initial_user_data()
-			GameState.on_load_callback = Callable(self, "_on_user_data_loaded")
-			GameState.load_from_db()
 		else:
-			show_error("Unexpected response from server.")
+			show_error("Unexpected response from server (signup).")
 	else:
 		if data.has("error"):
 			show_error(data["error"]["message"])
 		else:
-			show_error("Error %d: %s" % [code, text])
+			show_error("Signup error %d: %s" % [code, text])
 
 func show_error(msg: String):
 	error_label.text = msg
