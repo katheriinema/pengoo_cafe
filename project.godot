@@ -30,3 +30,10 @@ window/stretch/mode="canvas_items"
 [editor]
 
 version_control/autoload_on_startup=true
+
+[input]
+
+autload={
+"deadzone": 0.2,
+"events": []
+}

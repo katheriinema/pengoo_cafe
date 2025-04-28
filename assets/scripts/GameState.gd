@@ -2,6 +2,7 @@ extends Node
 
 # 🔐 Supabase config
 const SUPABASE_URL = "https://zefcumwyxmaazdoblhro.supabase.co"
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplZmN1bXd5eG1hYXpkb2JsaHJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU3NjU1ODUsImV4cCI6MjA2MTM0MTU4NX0.1jfCbrONobwjhSVyhMn098zKQH2Gl9vsLxA5wlWXB1c"
 const PROXY_URL = "https://supabase-proxy-qtrc.vercel.app/api/proxy?url="
 
 var user_id: String = ""
