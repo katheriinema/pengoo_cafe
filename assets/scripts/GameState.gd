@@ -59,12 +59,10 @@ func save_to_db(callback: Callable = Callable()):
 		print("⚠️ Cannot save, user not logged in")
 		return
 
-	# ✅ Save the callback
 	on_save_callback = callback
 
-	# 🛡️ Snapshot the current data at time of save
 	var snapshot = {
-		"id": user_id, # ✨ IMPORTANT: Must include id for UPSERT to work
+		"id": user_id,
 		"player_id": player_id,
 		"fish_count": fish_inventory,
 		"energy": current_energy,
@@ -85,27 +83,27 @@ func save_to_db(callback: Callable = Callable()):
 		"Authorization: Bearer " + access_token
 	]
 
-	# ✨ Notice the ?on_conflict=id
 	var url = "%s/rest/v1/user_data?on_conflict=id" % SUPABASE_URL
+
+	# ✨ Connect here to know when save finishes
+	http.request_completed.connect(_on_save_to_db_response)
 
 	http.request(url, headers, HTTPClient.METHOD_POST, JSON.stringify(snapshot))
 	print("🔁 UPSERT (POST with on_conflict=id) to Supabase:", url)
 	print("📦 Payload:", snapshot)
 
-func load_from_db(should_redirect := true):
-	_should_redirect = should_redirect
+func _on_save_to_db_response(result, code, headers, body):
+	http.request_completed.disconnect(_on_save_to_db_response)
 
-	if access_token == "" or user_id == "":
-		print("⚠️ Cannot load, user not logged in")
-		return
+	var text = body.get_string_from_utf8()
+	print("📦 Save response: ", text)
 
-	var headers = [
-		"apikey: " + SUPABASE_KEY,
-		"Authorization: Bearer " + access_token
-	]
-	var url = SUPABASE_URL + "/rest/v1/user_data?id=eq." + user_id
-	http.request(url, headers, HTTPClient.METHOD_GET)
-	http.request_completed.connect(_on_load_response)
+	if code == 201 or code == 200:
+		print("✅ Save successful.")
+		if on_save_callback.is_valid():
+			on_save_callback.call()
+	else:
+		push_error("❌ Failed to save user data. Code: %d, Response: %s" % [code, text])
 
 func _on_load_response(result, code, headers, body):
 	http.request_completed.disconnect(_on_load_response)
