@@ -3,7 +3,10 @@ Introducing Pengoo Café, a cozy penguin taiyaki-making simulation game built wi
 
 You started off with a happy peaceful life with your penguin coloney. But one day, under global warming's influence, the ice beneath your feet cracked and separated you from your friends and family. Alone, you are forced to fend for yourself when suddenly, you come ashore a new snowy landscape. It's time to build your own village and start a new chapter. You find a taiyaki penguin egg and hatch it by feeding it fish. From there on, it's up to you to expand your penguin coloney by hatching eggs, training penguins, managing your economy, and growing your bustling penguin workforce — all while serving delicious treats (and looks)!
 
-LINK TO PLAY (GET COOKING!) --> https://katheriinema.github.io/pengoo_cafe/
+**LINK TO PLAY (GET COOKING!) --> https://katheriinema.github.io/pengoo_cafe/
+**
+- for iPhone and iPad users: click the link, press the share icon, and click add to Home Screen. You will see an app icon on your device with our cute Pengoo mascot! 
+- for PC users: click the link and play on your web browser or install app by clicking the install app icon at the top right of your search bar. 
 ---
 
 ## Features
