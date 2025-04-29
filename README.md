@@ -74,7 +74,7 @@ assets/
 
 ## Acknowledgements
 
-- Inspired by Cats&Soup and a love for cozy management games
+- Inspired by a love for cozy management games
 - Music under free commercial license 
 - Thanks to the open-source Godot community!
 
