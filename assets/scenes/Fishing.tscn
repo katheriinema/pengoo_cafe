@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://d0fvsix37pfps"]
+[gd_scene load_steps=9 format=3 uid="uid://d0fvsix37pfps"]
 
 [ext_resource type="Script" uid="uid://dcj05jiqbuq2p" path="res://assets/scenes/fishing.gd" id="1_hjnv8"]
 [ext_resource type="Texture2D" uid="uid://bfr2f2athv5em" path="res://assets/art/others/fishing_bg.png" id="2_fcvyq"]
@@ -8,26 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://d8cypenrecic" path="res://assets/art/others/fishbutton.png" id="4_moqas"]
 [ext_resource type="AudioStream" uid="uid://dheq4gt6qccur" path="res://assets/music/Click.mp3" id="5_5b7xe"]
 [ext_resource type="AudioStream" uid="uid://ct6p5k86uv15d" path="res://assets/music/Sell.mp3" id="6_fcvyq"]
-
-[sub_resource type="FontFile" id="FontFile_moqas"]
-subpixel_positioning = 0
-msdf_pixel_range = 14
-msdf_size = 128
-cache/0/16/0/ascent = 0.0
-cache/0/16/0/descent = 0.0
-cache/0/16/0/underline_position = 0.0
-cache/0/16/0/underline_thickness = 0.0
-cache/0/16/0/scale = 1.0
-cache/0/40/0/ascent = 0.0
-cache/0/40/0/descent = 0.0
-cache/0/40/0/underline_position = 0.0
-cache/0/40/0/underline_thickness = 0.0
-cache/0/40/0/scale = 1.0
-cache/0/30/0/ascent = 0.0
-cache/0/30/0/descent = 0.0
-cache/0/30/0/underline_position = 0.0
-cache/0/30/0/underline_thickness = 0.0
-cache/0/30/0/scale = 1.0
 
 [node name="Fishing" type="Node2D"]
 script = ExtResource("1_hjnv8")
@@ -93,7 +73,7 @@ offset_right = 338.0
 offset_bottom = -77.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = SubResource("FontFile_moqas")
+theme_override_fonts/font = ExtResource("4_5qlmh")
 theme_override_font_sizes/font_size = 30
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -131,7 +111,7 @@ offset_right = 248.0
 offset_bottom = 72.0
 theme_override_fonts/font = ExtResource("4_5qlmh")
 theme_override_font_sizes/font_size = 24
-text = "Done Fishing 🎣"
+text = "Done Fishing"
 
 [node name="SuccessBox" type="ColorRect" parent="UI"]
 offset_left = 629.0

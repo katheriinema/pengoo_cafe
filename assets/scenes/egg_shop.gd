@@ -23,11 +23,11 @@ const RARITY_TO_TYPES = {
 
 func _ready():
 	randomize()
-	money_label.text = "💰 $%d" % GameState.coins
+	money_label.text = "$%d" % GameState.coins
 	GameState.connect("coins_changed", Callable(self, "_update_money_label"))
 
 func _update_money_label(new_amount: int):
-	money_label.text = "💰 $%d" % new_amount
+	money_label.text = "$%d" % new_amount
 
 func _on_buy_button_common_pressed():
 	_on_buy_button_pressed("common")

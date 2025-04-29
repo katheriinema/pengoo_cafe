@@ -1,11 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://ddl368sfmifvu"]
+[gd_scene load_steps=12 format=3 uid="uid://ddl368sfmifvu"]
 
 [ext_resource type="Script" uid="uid://dsmxsvsaco7xy" path="res://assets/scenes/Main.gd" id="1_npkpr"]
 [ext_resource type="Texture2D" uid="uid://cn870pghlrdxx" path="res://assets/art/others/main_bg (1).png" id="2_cb1w8"]
 [ext_resource type="Texture2D" uid="uid://cwt75on0hcsvv" path="res://assets/art/others/pond.png" id="3_34wpn"]
 [ext_resource type="Texture2D" uid="uid://qpu0tmlvonwx" path="res://assets/art/others/igloo.png" id="4_3qypx"]
 [ext_resource type="Texture2D" uid="uid://ca2o8m1mtcwdg" path="res://assets/art/eggs/common_egg.png" id="5_jv468"]
-[ext_resource type="FontFile" uid="uid://pqt8x14r650l" path="res://assets/fonts/Sniglet-ExtraBold.ttf" id="6_ajan2"]
 [ext_resource type="FontFile" uid="uid://cd1aioybntas7" path="res://assets/fonts/Sniglet-Regular.ttf" id="6_cb1w8"]
 [ext_resource type="Script" uid="uid://154kkc0fxfqi" path="res://cooking_manager.gd" id="7_3qypx"]
 [ext_resource type="Texture2D" uid="uid://b1pxh3yax0yat" path="res://assets/art/others/user.png" id="8_cb1w8"]
@@ -106,10 +105,10 @@ texture_normal = ExtResource("5_jv468")
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 3
 anchors_preset = 0
-offset_left = 1147.0
-offset_top = 7.0
-offset_right = 1347.0
-offset_bottom = 207.0
+offset_left = 1126.0
+offset_top = -20.0
+offset_right = 1326.0
+offset_bottom = 180.0
 mouse_filter = 2
 
 [node name="ItemList" type="VBoxContainer" parent="WorldLayer/SellWindow"]
@@ -120,12 +119,6 @@ mouse_filter = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="WorldLayer/SellWindow/ItemList"]
 layout_mode = 2
-
-[node name="Label" type="Label" parent="WorldLayer/SellWindow/ItemList/HBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.883232, 0.700171, 0, 1)
-theme_override_fonts/font = ExtResource("6_ajan2")
-theme_override_font_sizes/font_size = 24
 
 [node name="TextureRect" type="TextureRect" parent="WorldLayer/SellWindow/ItemList/HBoxContainer"]
 custom_minimum_size = Vector2(32, 32)

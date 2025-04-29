@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ch220igetl3l4"]
+[gd_scene load_steps=10 format=3 uid="uid://ch220igetl3l4"]
 
 [ext_resource type="Script" uid="uid://jvb3ptapnvcr" path="res://assets/scenes/egg_shop.gd" id="1_u7tvb"]
 [ext_resource type="Texture2D" uid="uid://dob3ljgrtwfm6" path="res://assets/art/others/profile_bg.png" id="2_he725"]
@@ -7,6 +7,7 @@
 [ext_resource type="FontFile" uid="uid://cd1aioybntas7" path="res://assets/fonts/Sniglet-Regular.ttf" id="3_b2nem"]
 [ext_resource type="Texture2D" uid="uid://dcgiwvyk33ntw" path="res://assets/art/eggs/epic_egg.png" id="4_xo7jn"]
 [ext_resource type="AudioStream" uid="uid://dheq4gt6qccur" path="res://assets/music/Click.mp3" id="6_kjaek"]
+[ext_resource type="Texture2D" uid="uid://bgdh8xwld2s0e" path="res://assets/art/icons/coin_icon.png" id="6_qol8b"]
 [ext_resource type="AudioStream" uid="uid://ct6p5k86uv15d" path="res://assets/music/Sell.mp3" id="7_he725"]
 
 [node name="EggShop" type="Node2D"]
@@ -82,19 +83,27 @@ horizontal_alignment = 1
 layout_mode = 2
 text = "Buy"
 
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = 1057.0
+offset_top = 40.0
+offset_right = 1106.0
+offset_bottom = 88.0
+texture = ExtResource("6_qol8b")
+expand_mode = 1
+
 [node name="MoneyLabel" type="Label" parent="."]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = 1027.0
-offset_top = 21.0
-offset_right = 1259.0
-offset_bottom = 94.0
+offset_left = 1123.0
+offset_top = 31.0
+offset_right = 1269.0
+offset_bottom = 104.0
 grow_horizontal = 0
 theme_override_colors/font_color = Color(0.0980392, 0.2, 0.596078, 1)
 theme_override_fonts/font = ExtResource("3_b2nem")
-theme_override_font_sizes/font_size = 20
-horizontal_alignment = 2
+theme_override_font_sizes/font_size = 30
+vertical_alignment = 1
 
 [node name="ConfirmationPopup" type="ConfirmationDialog" parent="."]
 

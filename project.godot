@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GameState="*res://assets/scripts/GameState.gd"
+GameState="*res://assets/scenes/GameState.gd"
 CookingManager="*res://cooking_manager.gd"
 MusicManager="*res://music_manager.tscn"
 
@@ -37,3 +37,7 @@ autload={
 "deadzone": 0.2,
 "events": []
 }
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true

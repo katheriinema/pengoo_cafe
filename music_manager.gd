@@ -10,6 +10,7 @@ func _ready():
 	if music_player.stream:
 		current_track = music_player.stream
 		music_player.play()
+	music_player.finished.connect(_on_music_finished)
 
 func play_music(new_stream: AudioStream):
 	if music_player.stream != new_stream:
@@ -33,3 +34,10 @@ func pause_music():
 	if music_player and music_player.playing:
 		music_player.stream_paused = true
 		print("⏸️ Music paused")
+
+func _on_music_finished():
+	# 🔁 When music ends, play again!
+	if current_track:
+		music_player.stream = current_track
+		music_player.play()
+		print("🔁 Music looped")

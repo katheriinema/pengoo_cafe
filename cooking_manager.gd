@@ -165,7 +165,7 @@ func _emit_selling_item(ingredient_type: String, payout: int, persist := true):
 	var settings = LabelSettings.new()
 	settings.font = font
 	settings.font_size = 24
-	settings.font_color = Color(0.7, 0.5, 0.1, 1.0)
+	settings.font_color = Color(0.9, 0.5, 0.1, 1.0)
 	label.label_settings = settings
 
 	row.add_child(icon)
@@ -175,6 +175,7 @@ func _emit_selling_item(ingredient_type: String, payout: int, persist := true):
 		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 			print("🪙 Sold:", ingredient_type, "for $%d" % payout)
 			GameState.add_coins(payout)
+			GameState.total_revenue += payout
 			GameState.for_sale_items = GameState.for_sale_items.filter(func(item): return item["type"] != ingredient_type or item["payout"] != payout)
 			GameState.save_to_db()
 			row.queue_free()

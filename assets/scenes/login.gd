@@ -26,6 +26,23 @@ func _ready():
 	logo_label.text = "Pengoo Café"
 	logo_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	logo_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	
+	username_input.focus_mode = Control.FOCUS_ALL
+	username_input.editable = true
+	password_input.focus_mode = Control.FOCUS_ALL
+	password_input.editable = true
+	password_input.secret = true
+
+	username_input.gui_input.connect(func(event):
+		if event is InputEventScreenTouch and event.pressed:
+			username_input.show_virtual_keyboard()
+	)
+
+	password_input.gui_input.connect(func(event):
+		if event is InputEventScreenTouch and event.pressed:
+			password_input.show_virtual_keyboard()
+	)
+	
 
 	if not login_button.pressed.is_connected(_on_login_button_pressed):
 		login_button.pressed.connect(_on_login_button_pressed)

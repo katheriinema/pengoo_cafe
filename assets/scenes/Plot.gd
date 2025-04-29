@@ -118,6 +118,7 @@ func sell():
 	var sell_price = int(rarity_multiplier * (level * level * UPGRADE_MULTIPLIER + BASE_UPGRADE_COST))
 
 	GameState.add_coins(sell_price)
+	GameState.total_revenue += sell_price
 	GameState.owned_penguins = GameState.owned_penguins.filter(func(p): return p["id"] != egg_id)
 	GameState.save_to_db()
 	queue_free()
@@ -182,12 +183,12 @@ func get_upgrade_cost() -> int:
 
 func upgrade():
 	if level >= MAX_LEVEL:
-		show_panel_message("🐧 Max level reached!")
+		show_panel_message("Max level reached!")
 		return
 
 	var cost = get_upgrade_cost()
 	if not GameState.spend_coins(cost):
-		show_panel_message("❌ Not enough coins to upgrade.")
+		show_panel_message("Not enough coins to upgrade.")
 		return
 
 	level += 1
@@ -198,7 +199,7 @@ func upgrade():
 			break
 
 	GameState.save_to_db()
-	show_panel_message("🆙 Penguin leveled up to %d!" % level)
+	show_panel_message("Penguin leveled up to %d!" % level)
 
 	var sound = get_tree().root.get_node_or_null("Main/UpgradeSound")
 	if sound:
