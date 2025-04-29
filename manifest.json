@@ -1,7 +1,7 @@
 {
     "name": "Pengoo Café",
     "short_name": "Pengoo Café",
-    "start_url": "pingoogoo/index.html",
+    "start_url": "./index.html",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#aabbcc",
