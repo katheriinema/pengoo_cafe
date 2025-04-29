@@ -1,4 +1,4 @@
-## **Pengoo Café **
+## Pengoo Café 
 Introducing Pengoo Café, a cozy penguin taiyaki-making simulation game built with Godot 4!
 
 You started off with a happy peaceful life with your penguin coloney. But one day, under global warming's influence, the ice beneath your feet cracked and separated you from your friends and family. Alone, you are forced to fend for yourself when suddenly, you come ashore a new snowy landscape. It's time to build your own village and start a new chapter. You find a taiyaki penguin egg and hatch it by feeding it fish. From there on, it's up to you to expand your penguin coloney by hatching eggs, training penguins, managing your economy, and growing your bustling penguin workforce — all while serving delicious treats (and looks)!
