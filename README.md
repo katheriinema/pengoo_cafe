@@ -1,25 +1,25 @@
-# 🐧 Pengu Cafe
+Pengoo Café
 
-Welcome to **Pengu Cafe**, a cozy penguin-themed management and simulation game built with **Godot 4**!
+Introducing Pengoo Café, a cozy penguin taiyaki-making simulation game built with Godot 4!
 
-In **Pengu Cafe**, you start your adventure by hatching your first penguin. Expand your cafe empire by hatching eggs, training penguins, managing your economy, and growing your bustling penguin workforce — all while serving delicious treats to your customers!
+You started off with a happy peaceful life with your penguin coloney. But one day, under global warming's influence, the ice beneath your feet cracked and separated you from your friends and family. Alone, you are forced to fend for yourself when suddenly, you come ashore a new snowy landscape. It's time to build your own village and start a new chapter. You find a taiyaki penguin egg and hatch it by feeding it fish. From there on, it's up to you to expand your penguin coloney by hatching eggs, training penguins, managing your economy, and growing your bustling penguin workforce — all while serving delicious treats (and looks)!
 
-Link to game --> https://katheriinema.github.io/pingoogoo/
+LINK TO PLAY (GET COOKING!) --> https://katheriinema.github.io/pingoogoo/
 ---
 
-## 🎮 Features
+## Features
 
 - **Egg Hatching**: Buy eggs, feed them, and hatch a variety of adorable penguins.
 - **Penguin Management**: Name, level up, and upgrade penguins to improve productivity.
 - **Cafe Economy**: Earn coins and fish by managing your penguins' tasks.
 - **Upgrades and Skills**: Boost your penguins’ efficiency through leveling and special upgrades.
-- **Persistent Cloud Save**: Progress is saved online using **Supabase**, so you never lose your penguin empire!
+- **Persistent Cloud Save**: Progress is saved online using Supabase, so you never lose your penguin coloney!
 - **Smooth UI and Animations**: Enjoy responsive controls, polished UI panels, and satisfying animations.
 - **Fishing Mini-Game**: Catch fish to feed your growing army of penguins!
 
 ---
 
-## 🚀 Tech Stack
+## Tech Stack
 
 - **Engine**: [Godot 4](https://godotengine.org/)
 - **Database and Auth**: [Supabase](https://supabase.com/) (Cloud-based user authentication and game state storage)
@@ -27,7 +27,7 @@ Link to game --> https://katheriinema.github.io/pingoogoo/
 
 ---
 
-## 📦 Project Structure
+## Project Structure (simplified)
 
 ```plaintext
 assets/
@@ -45,26 +45,26 @@ assets/
 
 ---
 
-## 🛠️ How to Run Locally
+## How to Run Locally
 
-1. **Clone the repo**:
+1. Clone the repo:
    ```bash
    git clone https://github.com/your-username/pengu-cafe.git
    cd pengu-cafe
    ```
 
-2. **Open the project** in Godot 4.4.1
+2. Open the project in Godot 4.4.1
 
-3. **Configure environment**:
-   - Set your **Supabase URL** and **API Key** inside `Supabase.gd`.
+3. Configure environment:
+   - Set your Supabase URL and API Key inside `Supabase.gd`.
    - Make sure you have a `user_data` table set up in your Supabase project.
 
-4. **Run the game**:
-   - Press **Play** in Godot!
+4. Run the game:
+   - Press Play in Godot!
 
 ---
 
-## 🧐 Future Plans
+## Future Plans
 
 - Add new penguin types, rare eggs, and cafe expansion mechanics
 - Implement customer orders and cooking mini-games
@@ -73,10 +73,10 @@ assets/
 
 ---
 
-## ❤️ Acknowledgements
+## Acknowledgements
 
-- Built with love for penguins and cozy management games
-- Music and assets either self-created or under free commercial license
+- Inspired by Cats&Soup and a love for cozy management games
+- Music under free commercial license 
 - Thanks to the open-source Godot community!
 
 ---
@@ -86,5 +86,3 @@ assets/
 This project is licensed under the [MIT License](LICENSE).
 
 ---
-
-# 🧊 Chill, Hatch, and Serve at **Pengu Cafe**! 🐧☕
